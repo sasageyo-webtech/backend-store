@@ -33,7 +33,6 @@ Route::middleware("throttle:api")->as('api.')->group(function() {
     });
 
     //products
-    Route::
 });
 
 
