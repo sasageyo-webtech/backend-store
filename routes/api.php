@@ -33,7 +33,9 @@ Route::middleware("throttle:api")->as('api.')->group(function() {
     });
 
     //products
+    Route::get('products', [ProductController::class, 'index'])->name('products.index');
 });
+
 
 
 
