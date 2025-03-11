@@ -13,7 +13,9 @@ class BrandController extends Controller
 {
     public function __construct(
         private BrandRepository $brandRepository
-    ){}
+    )
+    {
+    }
 
     public function index()
     {

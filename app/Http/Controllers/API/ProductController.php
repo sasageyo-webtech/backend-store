@@ -97,5 +97,15 @@ class ProductController extends Controller
         $id = $product->id;
         //TODO Delete product when is not used in order
         $product->delete();
+        return response()->json([
+            'message' => 'Product deleted successfully',
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $products = $this->productRepository->filterByName($query);
+        return new ProductCollection($products);
     }
 }

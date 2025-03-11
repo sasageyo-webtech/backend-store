@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Auth\AuthenticateController;
+use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ProductController;
 use Illuminate\Http\Request;
@@ -15,6 +16,12 @@ Route::middleware(["throttle:api", "auth:sanctum"])->as('api.')->group(function(
 
     //category
     Route::apiResource('categories', CategoryController::class);
+
+    //carts
+    Route::get('carts', [CartController::class, 'index'])->name('carts.index'); // แสดงรายการสินค้าในตะกร้า
+    Route::post('carts', [CartController::class, 'store']); // เพิ่มสินค้าลงในตะกร้า
+    Route::delete('carts/{id}', [CartController::class, 'destroy']); // ลบสินค้าจากตะกร้า
+    Route::post('carts/confirm', [CartController::class, 'confirmOrder']); // ยืนยันการสั่งซื้อ
 });
 
 Route::middleware("throttle:api")->as('api.')->group(function() {
@@ -34,6 +41,9 @@ Route::middleware("throttle:api")->as('api.')->group(function() {
 
     //products
     Route::get('products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('products/search', [ProductController::class, 'products.search'])->name('products.search');
+
+
 });
 
 

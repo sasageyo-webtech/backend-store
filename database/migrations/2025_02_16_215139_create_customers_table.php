@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('gender');
             $table->string('birthdate');
             $table->string('citizen_code');
-            $table->jsonb('cart')->nullable()->comment("list product in cart");
-            $table->jsonb('product_likes')->nullable()->comment('list of wishlist');
+//            $table->jsonb('product_likes')->nullable()->comment('list of wishlist');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

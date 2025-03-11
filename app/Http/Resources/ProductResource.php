@@ -23,7 +23,7 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'price' => $this->price,
             'stock' => $this->stock,
-            'image_paths' => collect($this->image_paths)->map(fn ($path) => asset('storage/' . $path))->all(), // ทำให้เป็น URL
+            'image_paths' => collect($this->image_paths)->map(fn ($path) => Storage::url($path))->all(), // ทำให้เป็น URL
             'rating' => $this->rating,
             'accessibility' => $this->accessibility,
         ];

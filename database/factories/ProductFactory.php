@@ -28,7 +28,7 @@ class ProductFactory extends Factory
 //            "https://picsum.photos/seed/" . uniqid() . "/640/480"
 //        )->all();
 
-        $image_paths = collect(range(1, rand(1, 2)))->map(fn () => $this->createFakeImage(now()))->all();
+        $image_paths = collect(range(1, rand(1, 2)))->map(fn () => $this->getRandomImagePath())->all();
 
         return [
             'category_id' => Category::inRandomOrder()->first()->id,
@@ -43,16 +43,18 @@ class ProductFactory extends Factory
         ];
     }
 
-    protected function createFakeImage(string $name): string
+    protected function getRandomImagePath(): string
     {
-        // สร้างภาพโดยใช้ URL ของ picsum
-        $imageContent = file_get_contents('https://picsum.photos/640/480');
-        $imageName = Str::random(10) . $name . '.jpg';
+        // โฟลเดอร์ที่เก็บรูปภาพ
+        $imagesFolder = 'products';
 
-        // บันทึกภาพลงใน storage/public/products
-        Storage::disk('public')->put('products/' . $imageName, $imageContent);
+        // ดึงรายชื่อไฟล์ทั้งหมดในโฟลเดอร์
+        $files = Storage::disk('public')->files($imagesFolder);
 
-        // คืนค่า path ของภาพที่เก็บใน storage
-        return 'products/' . $imageName;
+        // เลือกไฟล์ภาพแบบสุ่ม
+        $randomFile = $files[array_rand($files)];
+
+        // คืนค่า path ของภาพที่เลือก
+        return $randomFile;
     }
 }

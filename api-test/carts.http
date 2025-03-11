@@ -1,0 +1,17 @@
+### POST request to login
+POST http://localhost/api/users/login
+Accept: application/json
+Content-Type: application/json
+
+{ "email" : "ellie18@example.org", "password" : "password" }
+###
+
+@AccessToken1 = 9|0FLq647f8ouI7BIq5dFV2ywUr62gv8KSnEb7GjS0e72a8cac
+@customer_id = 30
+
+### GET request to carts
+GET {{ host }}/api/carts?customer_id={{ customer_id }}
+Accept: application/json
+Authorization: Bearer {{ AccessToken1 }}
+
+###
