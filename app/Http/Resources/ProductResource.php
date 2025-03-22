@@ -18,8 +18,8 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'category' => new CategoryResource($this->whenLoaded('category')), // โหลดความสัมพันธ์ category
-            'brand' => new BrandResource($this->whenLoaded('brand')), // โหลด brand
+            'category' => new CategoryResource($this->category), // โหลดความสัมพันธ์ category
+            'brand' => new BrandResource($this->brand), // โหลด brand
             'description' => $this->description,
             'price' => $this->price,
             'stock' => $this->stock,

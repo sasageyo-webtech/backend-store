@@ -69,13 +69,13 @@ class ProductController extends Controller
         //TODO Gate update product
         //TODO Validate update product
 
-        if ($request->hasFile('image_paths')) {
-            foreach ($request->file('image_paths') as $file) {
-                $filename = time() . '-' . $file->getClientOriginalName();
-                $path = $file->storeAs('products', $filename, 'public');
-                $imagePaths[] = $path; // Add new image path to the array
-            }
-        }
+//        if ($request->hasFile('image_paths')) {
+//            foreach ($request->file('image_paths') as $file) {
+//                $filename = time() . '-' . $file->getClientOriginalName();
+//                $path = $file->storeAs('products', $filename, 'public');
+//                $imagePaths[] = $path; // Add new image path to the array
+//            }
+//        }
 
         $this->productRepository->update([
             'category_id' => $request->get('category_id'),
@@ -83,20 +83,23 @@ class ProductController extends Controller
             'name' => $request->get('name'),
             'description' => $request->get('description'),
             'price' => $request->get('price'),
-            'stock' => $request->get('stock'),
-            'image_paths' => json_encode($imagePaths),
-            'rating' => $request->get('rating'),
             'accessibility' => $request->get('accessibility'),
         ], $product->id);
 
         return new ProductResource($product->refresh());
     }
 
-    public function destroy(Product $product)
+    public function destroy(int $id)
     {
-        $id = $product->id;
+        $product = $this->productRepository->isExists($id);
+        if(!$product){
+            return response()->json([
+                "message" => 'Product not found'
+            ], 404);
+        }
+
         //TODO Delete product when is not used in order
-        $product->delete();
+        $this->productRepository->delete($id);
         return response()->json([
             'message' => 'Product deleted successfully',
         ]);
