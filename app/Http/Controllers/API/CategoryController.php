@@ -26,7 +26,20 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $name = $request->input('name');
+
+        $category = $this->categoryRepository->findByName($name);
+        if($category){
+            return response()->json([
+                'message' => 'Category was created',
+            ], 400);
+        }
+
+        $category = $this->categoryRepository->create([
+            'name' => $name,
+        ]);
+
+        return new CategoryResource($category);
     }
 
     /**
@@ -43,6 +56,13 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         // TODO Validate update category
+        $name = $request->input('name');
+        $tmp = $this->categoryRepository->findByName($name);
+        if($tmp) {
+            return response()->json([
+                'message' => 'Category was created',
+            ], 400);
+        }
 
         $this->categoryRepository->update([
             'name' => $request->get('name')
@@ -56,6 +76,16 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        $tmp = $this->categoryRepository->isExists($category->id);
+        if(!$tmp){
+            return response()->json([
+                "message" => 'Category not found'
+            ], 404);
+        }
+
+        $this->categoryRepository->delete($category->id);
+        return response()->json([
+            'message' => 'Category deleted successfully',
+        ]);
     }
 }
