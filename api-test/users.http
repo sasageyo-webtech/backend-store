@@ -1,27 +1,5 @@
-### POST request to user register
-POST {{ host }}/api/users/register
-Accept: application/json
-Content-Type: application/json
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=PhpStorm
 
-{
-    "username" : "test",
-    "email" : "test@gmail.com",
-    "phone_number" : "1234567890",
-    "password" : "password",
-    "confirm_password" : "password"
-}
 ###
-
-### POST request to user login
-POST {{ host }}/api/users/login
-Accept: application/json
-Content-Type: application/json
-
-{
-    "email" : "test@gmail.com",
-    "password" : "password"
-}
-###
-
-
-

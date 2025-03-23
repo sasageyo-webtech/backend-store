@@ -2,14 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Enums\GenderType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Staff>
  */
-class CustomerFactory extends Factory
+class StaffFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +17,6 @@ class CustomerFactory extends Factory
      */
     public function definition(): array
     {
-
         return [
             'user_id' => User::factory()->create()->id,
         ];

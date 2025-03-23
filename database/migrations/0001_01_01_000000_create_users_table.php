@@ -16,7 +16,12 @@ return new class extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->string('email')->unique();
-            $table->string('phone_number');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('gender');
+            $table->string('citizen_code')->unique()->nullable();
+            $table->string('birthdate')->nullable();
+            $table->string('phone_number')->unique()->nullable();
             $table->string('image_path')->nullable();
             $table->string('role')->default(UserRole::CUSTOMER);
             $table->timestamp('email_verified_at')->nullable();

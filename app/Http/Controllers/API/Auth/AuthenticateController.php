@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\Enums\UserRole;
 use App\Models\User;
 use App\Repositories\UserRepository;
@@ -29,13 +30,14 @@ class AuthenticateController extends Controller
         }
         if (Hash::check($password, $user->password)) {
             return response()->json([
-                'user_id' => $user->id,
-                'username' => $user->username,
-                'email' => $user->email,
-                'phone_number' => $user->phone_number,
-                'image_path' => $user->image_path,
-                'role' => $user->role,
-                'token' => $user->createToken('token')->plainTextToken,
+                new UserResource($user),
+//                'user_id' => $user->id,
+//                'username' => $user->username,
+//                'email' => $user->email,
+//                'phone_number' => $user->phone_number,
+//                'image_path' => $user->image_path,
+//                'role' => $user->role,
+//                'token' => $user->createToken('token')->plainTextToken,
             ]);
         }
 
@@ -54,7 +56,9 @@ class AuthenticateController extends Controller
 
         $username = $request->input('username');
         $email = $request->input('email');
-        $phone_number = $request->input('phone_number');
+        $firstname = $request->input('firstname');
+        $lastname = $request->input('lastname');
+        $gender = $request->input('gender');
         $password = $request->input('password');
         $confirm_password = $request->input('confirm_password');
 
@@ -75,7 +79,9 @@ class AuthenticateController extends Controller
         $user = User::create([
             'username' => $username,
             'email' => $email,
-            'phone_number' => $phone_number,
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'gender' => $gender,
             'password' => Hash::make($password),
         ]);
 

@@ -14,11 +14,6 @@ class Customer extends Model
 
     protected $fillable = [
         'user_id',
-        'firstname',
-        'lastname',
-        'gender',
-        'birthdate',
-        'citizen_code',
     ];
 
     public function carts(): HasMany {
