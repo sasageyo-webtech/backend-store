@@ -4,6 +4,8 @@ use App\Http\Controllers\API\Auth\AuthenticateController;
 use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,7 +42,10 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     //<------------------ Must Auth ------------------>//
 
     //users
-    Route::delete('revoke', [AuthenticateController::class, 'revoke'])->name('user.revoke');
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::get('users/{user}', [UserController::class, 'show'])->name('user.show');
+    Route::put('users/{user}/profile', [ProfileController::class, 'update'])->name('user.profile.update');
+    Route::delete('users/revoke', [AuthenticateController::class, 'revoke'])->name('user.revoke');
 
     //products
     Route::post('products', [ProductController::class, 'store'])->name('products.store');

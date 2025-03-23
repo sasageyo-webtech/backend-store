@@ -1,5 +1,22 @@
-### GET request to example server
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=PhpStorm
+### GET request to /api/users (Show Users)
+GET {{ host }}/api/users
+Accept: application/json
 
-###
+### GET request to /api/users/{user} (Show User)
+GET {{ host }}/api/users/1
+Accept: application/json
+
+### PUT request to /api/users/{user}/profile (Update User Profile) ไม่จำเป็นต้องใส่ทุก field ก็ได้
+PUT {{ host }}/api/users/1/profile
+Accept: application/json
+Content-Type: application/json
+
+{
+    "firstname" : "Athirat",
+    "lastname" : "Kaewwichien",
+    "gender" : "MALE",
+    "citizen_code" : "1234567890123",
+    "birthdate" : "2003-01-29",
+    "phone_number" : "1234567890"
+}
+
