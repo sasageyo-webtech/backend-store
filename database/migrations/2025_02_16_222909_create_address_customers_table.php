@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('sub_district')->comment("แขวง");
             $table->string('district')->comment('เขต');
             $table->string('province')->comment('จังหวัด');
-            $table->string('postal_code')->comment('รหัสไปรษณีย์');
             $table->string('country')->default('Thailand')->comment('ประเทศ');
+            $table->string('postal_code')->comment('รหัสไปรษณีย์');
             $table->string('detail_address')->nullable();
             $table->timestamps();
             $table->softDeletes();
