@@ -2,13 +2,11 @@
 GET {{ host }}/api/categories
 Accept: application/json
 
-###
 
 ### GET request to /api/categories (Show Category)
 GET {{ host }}/api/categories/1
 Accept: application/json
 
-###
 
 ### POST request to /api/categories (Create Category)
 POST {{ host }}/api/categories
@@ -18,7 +16,6 @@ Content-Type: application/json
 {
     "name" : "boring"
 }
-###
 
 ### PUT request to /api/categories/{id} (Update Category)
 PUT {{ host }}/api/categories/10
@@ -28,7 +25,6 @@ Content-Type: application/json
 {
     "name" : "test0"
 }
-###
 
 ### DELETE request to /api/categories/{id} (Delete Category)
 DELETE {{ host }}/api/categories/10

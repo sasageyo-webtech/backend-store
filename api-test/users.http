@@ -1,27 +1,22 @@
-### POST request to user register
-POST {{ host }}/api/users/register
+### GET request to /api/users (Show Users)
+GET {{ host }}/api/users
+Accept: application/json
+
+### GET request to /api/users/{user} (Show User)
+GET {{ host }}/api/users/2
+Accept: application/json
+
+### PUT request to /api/users/{user}/profile (Update User Profile) ไม่จำเป็นต้องใส่ทุก field ก็ได้
+PUT {{ host }}/api/users/2/profile
 Accept: application/json
 Content-Type: application/json
 
 {
-    "username" : "test",
-    "email" : "test@gmail.com",
-    "phone_number" : "1234567890",
-    "password" : "password",
-    "confirm_password" : "password"
+    "firstname" : "Athirat",
+    "lastname" : "Kaewwichien",
+    "gender" : "MALE",
+    "citizen_code" : "1234567890123",
+    "birthdate" : "2003-01-29",
+    "phone_number" : "1234567890"
 }
-###
-
-### POST request to user login
-POST {{ host }}/api/users/login
-Accept: application/json
-Content-Type: application/json
-
-{
-    "email" : "test@gmail.com",
-    "password" : "password"
-}
-###
-
-
 

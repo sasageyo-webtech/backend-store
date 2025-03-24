@@ -2,13 +2,11 @@
 GET {{ host }}/api/products
 Accept: application/json
 
-###
 
 ### GET request to /api/products/{id} (Show Product)
 GET {{ host }}/api/products/2
 Accept: application/json
 
-###
 
 ### GET request to /api/products/search (Search Products)
 GET {{ host }}/api/products/search
@@ -18,7 +16,7 @@ Content-Type: application/json
 {
     "query": "name product"
 }
-###
+
 
 ### POST request to /api/products (Create Product)
 POST {{ host }}/api/products
@@ -37,7 +35,6 @@ Content-Type: multipart/form-data
     image_paths=@/path/to/your/image1.jpg
     image_paths=@/path/to/your/image2.jpg
 }
-###
 
 ### PUT request to /api/products/{id} (Update Product)
 PUT {{ host }}/api/products/2
@@ -52,10 +49,8 @@ Content-Type: application/json
     "price" : 123,
     "accessibility" : "PRIVATE"
 }
-###
 
 ### DELETE request to /api/products/{id} (Delete Product)
 DELETE {{ host }}/api/products/20
 Accept: application/json
 
-###

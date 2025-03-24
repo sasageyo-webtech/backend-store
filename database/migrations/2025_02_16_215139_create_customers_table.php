@@ -12,12 +12,6 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('gender');
-            $table->string('birthdate');
-            $table->string('citizen_code');
-//            $table->jsonb('product_likes')->nullable()->comment('list of wishlist');
             $table->timestamps();
             $table->softDeletes();
         });
