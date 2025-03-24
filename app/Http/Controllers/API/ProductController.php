@@ -27,8 +27,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //TODO Validate store product
-
         $imagePaths = [];
         if ($request->hasFile('image_paths')) {
             foreach ($request->file('image_paths') as $file) {
@@ -45,13 +43,15 @@ class ProductController extends Controller
             'description' => $request->get('description'),
             'price' => $request->get('price'),
             'stock' => $request->get('stock'),
-            'image_paths' => json_encode($imagePaths),
+            'image_paths' => $imagePaths, // Pass the array of image paths
             'rating' => $request->get('rating'),
             'accessibility' => $request->get('accessibility'),
         ]);
 
         return new ProductResource($product);
     }
+
+
 
     /**
      * Display the specified resource.
