@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Auth\AuthenticateController;
+use App\Http\Controllers\API\BrandController;
 use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ProductController;
@@ -37,6 +38,13 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::get('categories/{category}', [CategoryController::class, 'show']);
     Route::put('categories/{category}', [CategoryController::class, 'update']);
     Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
+
+    //brands
+    Route::get('brands', [BrandController::class, 'index'])->name('brands.index');
+    Route::get('brands/{brand}', [BrandController::class, 'show'])->name('brands.show');
+    Route::post('brands', [BrandController::class, 'store'])->name('brands.store');
+    Route::put('brands/{brand}', [BrandController::class, 'update'])->name('brands.update');
+    Route::delete('brands/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
 
 
     //<------------------ Must Auth ------------------>//

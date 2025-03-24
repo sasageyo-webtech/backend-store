@@ -25,7 +25,21 @@ class BrandController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $name = $request->input('name');
+        $brand = $this->brandRepository->findByName($name);
+        if($brand) {
+            return response()->json([
+                'message' => 'Brand already exists',
+            ], 400);
+        }
+
+        $brand = $this->brandRepository->create([
+            'name' => $name
+        ]);
+
+        return response()->json([
+            'message' => 'Brand successfully created',
+        ], 201);
     }
 
     public function show(Brand $brand)
@@ -40,8 +54,16 @@ class BrandController extends Controller
     {
         // TODO Validate update brand
 
+        $name = $request->input('name');
+        $tmp = $this->brandRepository->findByName($name);
+        if($tmp) {
+            return response()->json([
+                'message' => 'Brand already exists',
+            ], 400);
+        }
+
         $this->brandRepository->update([
-            'name' => $request->get('name'),
+            'name' => $request->input('name'),
         ], $brand->id);
 
         return new BrandResource($brand->refresh());
@@ -50,5 +72,8 @@ class BrandController extends Controller
     public function destroy(Brand $brand)
     {
         $this->brandRepository->delete($brand->id);
+        return response()->json([
+            'message' => 'Brand successfully deleted',
+        ], 200);
     }
 }
