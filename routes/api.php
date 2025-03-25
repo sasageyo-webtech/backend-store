@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AddressCustomerController;
 use App\Http\Controllers\API\Auth\AuthenticateController;
 use App\Http\Controllers\API\BrandController;
 use App\Http\Controllers\API\CartController;
@@ -59,12 +60,20 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::post('products', [ProductController::class, 'store'])->name('products.store');
     Route::put('products/{product}', [ProductController::class, 'update']);
     Route::delete('products/{product}', [ProductController::class, 'destroy']);
+    Route::patch('products/{product}/add-stock', [ProductController::class, 'addStock'])->name('products.add.stock');
 
     //carts
-    Route::get('carts', [CartController::class, 'index'])->name('carts.index'); // แสดงรายการสินค้าในตะกร้า
+    Route::get('carts', [CartController::class, 'index'])->name('carts.index');
     Route::post('carts', [CartController::class, 'store']); // เพิ่มสินค้าลงในตะกร้า
-    Route::delete('carts/{id}', [CartController::class, 'destroy']); // ลบสินค้าจากตะกร้า
-    Route::post('carts/confirm', [CartController::class, 'confirmOrder']); // ยืนยันการสั่งซื้อ
+    Route::delete('carts/{cart}', [CartController::class, 'destroy']); // ลบสินค้าจากตะกร้า
+//    Route::post('carts/confirm', [CartController::class, 'confirmOrder']); // ยืนยันการสั่งซื้อ
+
+    //address_customers
+    Route::get('address-customers', [AddressCustomerController::class, 'index'])->name('address-customers.index');
+    Route::get('address-customers/{addressCustomer}', [AddressCustomerController::class, 'show'])->name('address-customer.show'); // แสดงที่อยู่
+    Route::post('address-customers', [AddressCustomerController::class, 'store'])->name('address-customer.store'); // สร้างที่อยู่ใหม่
+    Route::put('address-customers/{addressCustomer}', [AddressCustomerController::class, 'update'])->name('address-customer.update'); // อัปเดตที่อยู่
+    Route::delete('address-customers/{addressCustomer}', [AddressCustomerController::class, 'destroy'])->name('address-customer.delete'); // ลบที่อยู่
 });
 
 Route::middleware(["throttle:api", "auth:sanctum"])->as('api.')->group(function() {

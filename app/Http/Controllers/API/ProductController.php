@@ -111,4 +111,20 @@ class ProductController extends Controller
         $products = $this->productRepository->filterByName($query);
         return new ProductCollection($products);
     }
+
+    public function addStock(Request $request, Product $product){
+        $product = $this->productRepository->getById($product->id);
+        if(!$product){
+            return response()->json([
+                "message" => 'Product not found'
+            ], 400);
+        }
+
+        $amount = $request->input('amount');
+        $this->productRepository->update([
+            'stock' => $product->stock + $amount
+        ], $product->id);
+
+        return new ProductResource($product->refresh());
+    }
 }

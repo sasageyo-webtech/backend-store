@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CartCollection;
 use App\Http\Resources\CartResource;
 use App\Models\Cart;
+use App\Models\Customer;
 use App\Repositories\CartRepository;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -22,7 +23,7 @@ class CartController extends Controller
 
     public function index(Request $request)
     {
-        $customer_id = $request->query('customer_id');
+        $customer_id = $request->input('customer_id');
         $carts = $this->cartRepository->getByCustomerId($customer_id);
         return new CartCollection($carts);
     }
@@ -32,55 +33,36 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1',
-        ]);
+//        $request->validate([
+//            'product_id' => 'required|exists:products,id',
+//            'quantity' => 'required|integer|min:1',
+//        ]);
 
-        $cart = Cart::updateOrCreate(
-            ['customer_id' => auth()->id(), 'product_id' => $request->product_id],
-            ['quantity' => $request->quantity]
-        );
+        $customer_id = $request->input('customer_id');
+        $product_id = $request->input('product_id');
+        $amount = $request->input('amount');
+
+
+        $cart = Cart::updateOrCreate([
+            'customer_id' => $customer_id,
+            'product_id' => $product_id,
+            'quantity' => $amount,
+        ]);
 
         return new CartResource($cart->refresh());
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Cart $cart)
     {
-        $this->cartRepository->delete($cart->id);
-        response()->json([
-            'message' => 'Product removed from cart'
-        ]);
-    }
-
-    public function confirmOrder()
-    {
-        $carts = Cart::where('customer_id', auth()->id())->get();
-
-        // ลบรายการในตะกร้า
-        foreach ($carts as $cart) {
-            $cart->delete();
+        if(!$this->cartRepository->isExists($cart->id)){
+            return response()->json([
+                'message' => 'Cart not found'
+            ], 404);
         }
 
-        return response()->json(['message' => 'Order confirmed and cart cleared']);
+        $this->cartRepository->delete($cart->id);
+        return response()->json([
+            'message' => 'Product removed from cart successfully'
+        ], 200);
     }
 }
