@@ -18,7 +18,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = $this->productRepository->getAll();
+        $products = $this->productRepository->get(20);
         return new ProductCollection($products);
     }
 
