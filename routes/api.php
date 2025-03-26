@@ -5,6 +5,7 @@ use App\Http\Controllers\API\Auth\AuthenticateController;
 use App\Http\Controllers\API\BrandController;
 use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\ImageProductController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\ProfileController;
@@ -62,6 +63,8 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::put('products/{product}', [ProductController::class, 'update']);
     Route::delete('products/{product}', [ProductController::class, 'destroy']);
     Route::patch('products/{product}/add-stock', [ProductController::class, 'addStock'])->name('products.add.stock');
+    Route::post('products/images', [ImageProductController::class, 'store'])->name('products.images.store');
+    Route::delete('products/images/{imageProduct}', [ImageProductController::class, 'destroy'])->name('products.images.destroy');
 
     //carts
     Route::get('carts', [CartController::class, 'index'])->name('carts.index');

@@ -23,9 +23,15 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'price' => $this->price,
             'stock' => $this->stock,
-            'image_paths' => $this->getImageUrls(), // ทำให้เป็น URL
             'rating' => $this->rating,
             'accessibility' => $this->accessibility,
+            'image_products' => $this->images->map(function ($image) {
+                return [
+                    "image_id" => $image->id,
+                    "product_id" => $image->product_id,
+                    "image_path" => $image->getImageUrl(),
+                ];
+            })
         ];
     }
 }

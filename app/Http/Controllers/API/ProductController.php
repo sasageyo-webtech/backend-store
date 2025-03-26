@@ -28,6 +28,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $imagePaths = [];
+        return response()->json($request->hasFile('image_paths'));
         if ($request->hasFile('image_paths')) {
             foreach ($request->file('image_paths') as $file) {
                 $filename = time() . '-' . $file->getClientOriginalName();
@@ -35,6 +36,7 @@ class ProductController extends Controller
                 $imagePaths[] = $path; // Store the path for each uploaded image
             }
         }
+
 
         $product = $this->productRepository->create([
             'category_id' => $request->get('category_id'),
