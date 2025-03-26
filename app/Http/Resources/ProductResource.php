@@ -23,22 +23,9 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'price' => $this->price,
             'stock' => $this->stock,
-            'image_paths' => collect($this->image_paths)->map(fn ($path) => Storage::url($path))->all(), // ทำให้เป็น URL
+            'image_paths' => $this->getImageUrls(), // ทำให้เป็น URL
             'rating' => $this->rating,
             'accessibility' => $this->accessibility,
         ];
-    }
-
-    protected function getImageUrls()
-    {
-        // เช็คว่ามี image_paths หรือไม่
-        if (!$this->image_paths) {
-            return [];
-        }
-
-        // แปลง path ของแต่ละภาพให้เป็น URL ที่สามารถเข้าถึงได้
-        return collect($this->image_paths)->map(function ($path) {
-            return Storage::url($path); // การใช้ Storage::url จะคืนค่า URL ที่สามารถเข้าถึงได้
-        })->all();
     }
 }

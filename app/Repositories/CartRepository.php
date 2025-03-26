@@ -14,4 +14,9 @@ class CartRepository
     {
         return $this->model::where("customer_id", $id)->with("product")->get();
     }
+
+    public function deleteByCustomerId(int $customerId)
+    {
+        return Cart::where('customer_id', $customerId)->delete();
+    }
 }

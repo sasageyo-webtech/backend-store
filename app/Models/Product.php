@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -40,12 +41,33 @@ class Product extends Model
         return $this->hasMany(Cart::class);
     }
 
+    public function order_products(): HasMany {
+        return $this->hasMany(OrderProduct::class);
+    }
 
-    public function toSearchableArray()
+    public function getImagePaths(): array
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-        ];
+        // เช็คว่ามี image_paths หรือไม่
+        if (!$this->image_paths) {
+            return [];
+        }
+
+        // แปลง path ของแต่ละภาพให้เป็น URL ที่สามารถเข้าถึงได้
+        return collect($this->image_paths)->map(function ($path) {
+            return Storage::url($path); // การใช้ Storage::url จะคืนค่า URL ที่สามารถเข้าถึงได้
+        })->all();
+    }
+
+    public function getImageUrls(): array
+    {
+        // เช็คว่ามี image_paths หรือไม่
+        if (!$this->image_paths) {
+            return [];
+        }
+
+        // แปลง path ของแต่ละภาพให้เป็น URL ที่สามารถเข้าถึงได้
+        return collect($this->getImagePaths())->map(function ($path) {
+            return  env('APP_URL', 'http://localhost')  . $path; // การใช้ Storage::url จะคืนค่า URL ที่สามารถเข้าถึงได้
+        })->all();
     }
 }

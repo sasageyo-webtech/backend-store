@@ -19,8 +19,10 @@ class CartResource extends JsonResource
             'customer_id' => $this->customer->id,
             'product' => [
                 'product_id' => $this->product->id,
+                'image_paths' => $this->product->getImageUrls(),
                 'name' => $this->product->name,
                 'price' => $this->product->price,
+                'stock' => $this->product->stock,
             ],
             'quantity' => $this->quantity, // จำนวนสินค้าที่อยู่ในตะกร้า
             'total_price' => $this->quantity * $this->product->price,
