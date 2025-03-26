@@ -81,10 +81,11 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::delete('address-customers/{addressCustomer}', [AddressCustomerController::class, 'destroy'])->name('address-customer.delete'); // ลบที่อยู่
 
     //orders
-    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('staffs/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('customers/orders/{customer}', [OrderController::class, 'getOrderCustomer'])->name('orders.getOrderCustomer');
+    Route::post('customers/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::put('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+    Route::patch('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
 });
 
 Route::middleware(["throttle:api", "auth:sanctum"])->as('api.')->group(function() {

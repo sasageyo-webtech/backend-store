@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
+use App\Models\Customer;
 use App\Models\Enums\OrderStatus;
 use App\Models\Enums\PaymentMethod;
 use App\Models\Order;
@@ -27,7 +29,8 @@ class OrderController extends Controller
 
     public function index()
     {
-        //
+        $orders = $this->orderRepository->get(20);
+        return new OrderCollection($orders);
     }
 
 
@@ -64,12 +67,7 @@ class OrderController extends Controller
             // อัปโหลดไฟล์ไปยัง storage
             $filename = time() . '-' . $receiptImage->getClientOriginalName();
             $path = $receiptImage->storeAs('receipts', $filename, 'public');
-//            return response()->json([
-//                "order" => $order,
-//                "amount" => $totalPrice,
-//                "method" => PaymentMethod::BANK_TRANSFER,
-//                "receipt" => $path,
-//            ]);
+
             // ใช้ path ที่ได้ในการบันทึกลง payment
             $payment = $this->paymentRepository->create([
                 'order_id' => $order->id,
@@ -103,12 +101,21 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        //
+        return new OrderResource($order);
     }
 
     public function update(Request $request, Order $order)
     {
-        //
+        $this->orderRepository->update([
+            "status" => $request->input('status')
+        ], $order->id);
+
+        return new OrderResource($order->refresh());
+    }
+
+    public function getOrderCustomer(Customer $customer){
+        $orders = $this->orderRepository->getByCustomerId($customer->id);
+        return new OrderCollection($orders);
     }
 
 }

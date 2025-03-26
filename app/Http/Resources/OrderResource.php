@@ -34,6 +34,7 @@ class OrderResource extends JsonResource
                     'name' => $product->name,
                     'quantity' => $order_product->quantity,
                     'total_price' => $order_product->total_price,
+                    'image_path' => $product->images[0]->getImageUrl(),
                 ];
             }),
         ];

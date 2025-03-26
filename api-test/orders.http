@@ -1,5 +1,5 @@
 ### POST request to /api/orders (Create Order)
-POST {{ host }}/api/orders
+POST {{ host }}/api/customers/orders
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
 
 ------WebKitFormBoundary
@@ -12,3 +12,24 @@ Content-Type: image/png
 
 < ./img.png
 ------WebKitFormBoundary--
+
+### GET request to /api/staffs/orders
+GET {{ host }}/api/staffs/orders
+Accept: application/json
+
+### GET request to /api/customers/orders
+GET {{ host }}/api/customers/orders/2
+Accept: application/json
+
+### GET request to /api/orders/{order}
+GET {{ host }}/api/orders/1
+Accept: application/json
+
+### PATCH request to /api/orders/{order}
+PATCH {{ host }}/api/orders/1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "status": "PENDING"
+}
