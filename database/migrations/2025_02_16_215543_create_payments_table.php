@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Order::class);
-            $table->foreignIdFor(Customer::class);
             $table->decimal('amount', 10, 2);
             $table->string('method');
+            $table->string('image_receipt_path');
             $table->timestamps();
         });
     }

@@ -15,15 +15,17 @@ class CartResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+            'cart_id' => $this->id,
+            'customer_id' => $this->customer->id,
             'product' => [
-                'id' => $this->product->id,
+                'product_id' => $this->product->id,
+                'image_paths' => $this->product->getImageUrls(),
                 'name' => $this->product->name,
                 'price' => $this->product->price,
-                'quantity' => $this->quantity, // จำนวนสินค้าที่อยู่ในตะกร้า
+                'stock' => $this->product->stock,
             ],
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'quantity' => $this->quantity, // จำนวนสินค้าที่อยู่ในตะกร้า
+            'total_price' => $this->quantity * $this->product->price,
         ];
     }
 }

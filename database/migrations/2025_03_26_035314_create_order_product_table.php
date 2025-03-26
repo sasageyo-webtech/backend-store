@@ -1,8 +1,7 @@
 <?php
 
-use App\Models\AddressCustomer;
-use App\Models\Customer;
-use App\Models\Enums\ShipmentStatus;
+use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,12 +13,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shipments', function (Blueprint $table) {
+        Schema::create('order_product', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Customer::class);
-            $table->foreignIdFor(AddressCustomer::class);
-            $table->string('status')->default(ShipmentStatus::PENDING);
+            $table->foreignIdFor(Order::class);
+            $table->foreignIdFor(Product::class);
+            $table->integer('quantity');
+            $table->decimal('total_price', 10, 2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shipments');
+        Schema::dropIfExists('order_product');
     }
 };

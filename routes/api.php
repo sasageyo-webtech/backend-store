@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\API\AddressCustomerController;
 use App\Http\Controllers\API\Auth\AuthenticateController;
+use App\Http\Controllers\API\BrandController;
 use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\UserController;
@@ -38,6 +41,13 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::put('categories/{category}', [CategoryController::class, 'update']);
     Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
 
+    //brands
+    Route::get('brands', [BrandController::class, 'index'])->name('brands.index');
+    Route::get('brands/{brand}', [BrandController::class, 'show'])->name('brands.show');
+    Route::post('brands', [BrandController::class, 'store'])->name('brands.store');
+    Route::put('brands/{brand}', [BrandController::class, 'update'])->name('brands.update');
+    Route::delete('brands/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
+
 
     //<------------------ Must Auth ------------------>//
 
@@ -51,12 +61,26 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::post('products', [ProductController::class, 'store'])->name('products.store');
     Route::put('products/{product}', [ProductController::class, 'update']);
     Route::delete('products/{product}', [ProductController::class, 'destroy']);
+    Route::patch('products/{product}/add-stock', [ProductController::class, 'addStock'])->name('products.add.stock');
 
     //carts
-    Route::get('carts', [CartController::class, 'index'])->name('carts.index'); // แสดงรายการสินค้าในตะกร้า
+    Route::get('carts', [CartController::class, 'index'])->name('carts.index');
     Route::post('carts', [CartController::class, 'store']); // เพิ่มสินค้าลงในตะกร้า
-    Route::delete('carts/{id}', [CartController::class, 'destroy']); // ลบสินค้าจากตะกร้า
-    Route::post('carts/confirm', [CartController::class, 'confirmOrder']); // ยืนยันการสั่งซื้อ
+    Route::delete('carts/{cart}', [CartController::class, 'destroy']); // ลบสินค้าจากตะกร้า
+//    Route::post('carts/confirm', [CartController::class, 'confirmOrder']); // ยืนยันการสั่งซื้อ
+
+    //address_customers
+    Route::get('address-customers', [AddressCustomerController::class, 'index'])->name('address-customers.index');
+    Route::get('address-customers/{addressCustomer}', [AddressCustomerController::class, 'show'])->name('address-customer.show'); // แสดงที่อยู่
+    Route::post('address-customers', [AddressCustomerController::class, 'store'])->name('address-customer.store'); // สร้างที่อยู่ใหม่
+    Route::put('address-customers/{addressCustomer}', [AddressCustomerController::class, 'update'])->name('address-customer.update'); // อัปเดตที่อยู่
+    Route::delete('address-customers/{addressCustomer}', [AddressCustomerController::class, 'destroy'])->name('address-customer.delete'); // ลบที่อยู่
+
+    //orders
+    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::put('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
 });
 
 Route::middleware(["throttle:api", "auth:sanctum"])->as('api.')->group(function() {
