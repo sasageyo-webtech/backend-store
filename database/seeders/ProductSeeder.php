@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ImageProduct;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -17,7 +18,12 @@ class ProductSeeder extends Seeder
         $limit = 20;
         $exits = Product::count();
         if ($limit > $exits) {
-            Product::factory()->count($limit)->create();
+            for ($i = 1; $i <= $limit; $i++) {
+                $product = Product::factory()->create();
+                ImageProduct::factory()->create([
+                    'product_id' => $product->id,
+                ]);
+            }
         }
     }
 }

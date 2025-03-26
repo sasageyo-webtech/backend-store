@@ -14,10 +14,10 @@ Content-Type: application/json
 
 {
     "customer_id": 2,
-    "product_id": 3,
+    "product_id": 5,
     "amount": 20
 }
 
 ###DELETE request to /api/carts/{cart} (Delete Cart)
-DELETE {{ host }}/api/carts/52
+DELETE {{ host }}/api/carts/20
 Accept: application/json

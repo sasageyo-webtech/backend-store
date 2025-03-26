@@ -66,7 +66,7 @@ class BrandController extends Controller
 
     public function destroy(Brand $brand)
     {
-        if($brand->products()->count()) {
+        if($brand->products->count()) {
             return response()->json([
                 'message' => 'Brand has products associated with it',
             ], 400);

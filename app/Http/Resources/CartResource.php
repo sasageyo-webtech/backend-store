@@ -19,7 +19,7 @@ class CartResource extends JsonResource
             'customer_id' => $this->customer->id,
             'product' => [
                 'product_id' => $this->product->id,
-                'image_paths' => $this->product->getImageUrls(),
+                'image_paths' => $this->product->images->first()->getImageUrl(),
                 'name' => $this->product->name,
                 'price' => $this->product->price,
                 'stock' => $this->product->stock,

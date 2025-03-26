@@ -76,11 +76,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $tmp = $this->categoryRepository->isExists($category->id);
-        if(!$tmp){
+        if($category->products->count()) {
             return response()->json([
-                "message" => 'Category not found'
-            ], 404);
+                'message' => 'Category has products associated with it',
+            ], 400);
         }
 
         $this->categoryRepository->delete($category->id);
