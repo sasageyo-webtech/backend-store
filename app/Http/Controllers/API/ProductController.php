@@ -66,28 +66,31 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //TODO Gate update product
-        //TODO Validate update product
+        // Add image upload handling if needed
+//        $imagePaths = $product->image_paths;
 
-//        if ($request->hasFile('image_paths')) {
-//            foreach ($request->file('image_paths') as $file) {
-//                $filename = time() . '-' . $file->getClientOriginalName();
-//                $path = $file->storeAs('products', $filename, 'public');
-//                $imagePaths[] = $path; // Add new image path to the array
-//            }
-//        }
+        $imagePaths = [];
+        if ($request->hasFile('image_paths')) {
+            foreach ($request->file('image_paths') as $file) {
+                $filename = time() . '-' . $file->getClientOriginalName();
+                $path = $file->storeAs('products', $filename, 'public');
+                $imagePaths[] = $path; // Store the path for each uploaded image
+            }
+        }
 
+        // Perform the update with the images
         $this->productRepository->update([
             'category_id' => $request->get('category_id'),
-            'brand_id' => $request->get('brand_id'),
             'name' => $request->get('name'),
             'description' => $request->get('description'),
             'price' => $request->get('price'),
             'accessibility' => $request->get('accessibility'),
+            'image_paths' => $imagePaths, // Update image paths
         ], $product->id);
 
         return new ProductResource($product->refresh());
     }
+
 
     public function destroy(int $id)
     {
