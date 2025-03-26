@@ -23,12 +23,7 @@ class ProductFactory extends Factory
     {
         $name = $this->faker->name();
 
-//        // สร้างและบันทึกรูปลง storage แล้วใช้ path
-//        $image_paths = collect(range(1, rand(2, 5)))->map(fn () =>
-//            "https://picsum.photos/seed/" . uniqid() . "/640/480"
-//        )->all();
-
-        $image_paths = collect(range(1, rand(2, 3)))->map(fn () => $this->getRandomImagePath())->all();
+//        $image_paths = collect(range(1, rand(2, 3)))->map(fn () => $this->getRandomImagePath())->all();
 
         return [
             'category_id' => Category::inRandomOrder()->first()->id,
@@ -37,24 +32,23 @@ class ProductFactory extends Factory
             'description' => $this->faker->realText(),
             'price' => $this->faker->numberBetween(500, 10000),
             'stock' => $this->faker->numberBetween(0, 100),
-            'image_paths' => $image_paths,
             'rating' => $this->faker->numberBetween(0, 5),
             'accessibility' => $this->faker->randomElement([ProductAccessibility::PUBLIC, ProductAccessibility::PRIVATE]),
         ];
     }
 
-    protected function getRandomImagePath(): string
-    {
-        // โฟลเดอร์ที่เก็บรูปภาพ
-        $imagesFolder = 'products';
-
-        // ดึงรายชื่อไฟล์ทั้งหมดในโฟลเดอร์
-        $files = Storage::disk('public')->files($imagesFolder);
-
-        // เลือกไฟล์ภาพแบบสุ่ม
-        $randomFile = $files[array_rand($files)];
-
-        // คืนค่า path ของภาพที่เลือก
-        return $randomFile;
-    }
+//    protected function getRandomImagePath(): string
+//    {
+//        // โฟลเดอร์ที่เก็บรูปภาพ
+//        $imagesFolder = 'products';
+//
+//        // ดึงรายชื่อไฟล์ทั้งหมดในโฟลเดอร์
+//        $files = Storage::disk('public')->files($imagesFolder);
+//
+//        // เลือกไฟล์ภาพแบบสุ่ม
+//        $randomFile = $files[array_rand($files)];
+//
+//        // คืนค่า path ของภาพที่เลือก
+//        return $randomFile;
+//    }
 }

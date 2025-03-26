@@ -4,7 +4,7 @@ Accept: application/json
 
 
 ### GET request to /api/products/{id} (Show Product)
-GET {{ host }}/api/products/5
+GET {{ host }}/api/products/1
 Accept: application/json
 
 
@@ -91,11 +91,23 @@ Content-Type: application/json
     "amount" : 10
 }
 
+### POST request to upload an image for a product
+POST {{host}}/api/products/images
+Accept: application/json
+Content-Type: multipart/form-data boundary=----WebKitFormBoundary
 
-
-###
 ------WebKitFormBoundary
-Content-Disposition: form-data; name="image_paths"; filename="img.png"
+Content-Disposition: form-data; name="image_file"; filename="3.png"
 Content-Type: image/png
 
-< ./img.png
+< ./3.png
+------WebKitFormBoundary
+Content-Disposition: form-data; name="product_id"
+
+1
+------WebKitFormBoundary--
+
+### DELETE request to delete an image product by ID
+DELETE {{host}}/api/products/images/1
+Accept: application/json
+

@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->decimal('price', 10, 2);
             $table->integer('stock')->default(0);
-            $table->jsonb('image_paths')->nullable()->comment("list of image path");
             $table->decimal('rating', 2, 1)->default(0)->comment("0 - 5");
             $table->string('accessibility')->default(ProductAccessibility::PUBLIC)->comment("product accessibility PUBLIC or PRIVATE");
             $table->timestamps();
