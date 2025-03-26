@@ -4,7 +4,7 @@ Accept: application/json
 
 
 ### GET request to /api/products/{id} (Show Product)
-GET {{ host }}/api/products/2
+GET {{ host }}/api/products/5
 Accept: application/json
 
 

@@ -1,0 +1,14 @@
+### POST request to /api/orders (Create Order)
+POST {{ host }}/api/orders
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="customer_id"
+
+2
+------WebKitFormBoundary
+Content-Disposition: form-data; name="image_receipt_path"; filename="img.png"
+Content-Type: image/png
+
+< ./img.png
+------WebKitFormBoundary--

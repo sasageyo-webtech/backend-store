@@ -19,8 +19,6 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Customer::class);
-            $table->foreignIdFor(Shipment::class);
-            $table->foreignIdFor(Payment::class);
             $table->decimal('total_price', 10, 2)->default(0)->comment("ราคารวม");
             $table->string('status')->default(OrderStatus::PENDING);
             $table->timestamps();

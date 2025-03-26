@@ -28,7 +28,7 @@ class ProductFactory extends Factory
 //            "https://picsum.photos/seed/" . uniqid() . "/640/480"
 //        )->all();
 
-        $image_paths = collect(range(1, rand(1, 2)))->map(fn () => $this->getRandomImagePath())->all();
+        $image_paths = collect(range(1, rand(2, 3)))->map(fn () => $this->getRandomImagePath())->all();
 
         return [
             'category_id' => Category::inRandomOrder()->first()->id,

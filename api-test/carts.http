@@ -4,7 +4,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "customer_id": 1
+    "customer_id": 2
 }
 
 ### POST request to /api/carts (Create Cart)
@@ -13,9 +13,9 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "customer_id": 1,
-    "product_id": 1,
-    "amount": 30
+    "customer_id": 2,
+    "product_id": 3,
+    "amount": 20
 }
 
 ###DELETE request to /api/carts/{cart} (Delete Cart)

@@ -5,6 +5,7 @@ use App\Http\Controllers\API\Auth\AuthenticateController;
 use App\Http\Controllers\API\BrandController;
 use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\UserController;
@@ -74,6 +75,12 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::post('address-customers', [AddressCustomerController::class, 'store'])->name('address-customer.store'); // สร้างที่อยู่ใหม่
     Route::put('address-customers/{addressCustomer}', [AddressCustomerController::class, 'update'])->name('address-customer.update'); // อัปเดตที่อยู่
     Route::delete('address-customers/{addressCustomer}', [AddressCustomerController::class, 'destroy'])->name('address-customer.delete'); // ลบที่อยู่
+
+    //orders
+    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::put('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
 });
 
 Route::middleware(["throttle:api", "auth:sanctum"])->as('api.')->group(function() {
