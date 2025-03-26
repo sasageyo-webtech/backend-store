@@ -5,7 +5,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
+use App\Repositories\BrandRepository;
+use App\Repositories\CategoryRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
@@ -13,6 +17,8 @@ class ProductController extends Controller
 {
     public function __construct(
         private ProductRepository $productRepository,
+        private BrandRepository $brandRepository,
+        private CategoryRepository $categoryRepository,
     ) {}
 
 
@@ -22,72 +28,35 @@ class ProductController extends Controller
         return new ProductCollection($products);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $imagePaths = [];
-        return response()->json($request->hasFile('image_paths'));
-        if ($request->hasFile('image_paths')) {
-            foreach ($request->file('image_paths') as $file) {
-                $filename = time() . '-' . $file->getClientOriginalName();
-                $path = $file->storeAs('products', $filename, 'public');
-                $imagePaths[] = $path; // Store the path for each uploaded image
-            }
-        }
-
-
         $product = $this->productRepository->create([
-            'category_id' => $request->get('category_id'),
-            'brand_id' => $request->get('brand_id'),
-            'name' => $request->get('name'),
-            'description' => $request->get('description'),
-            'price' => $request->get('price'),
-            'stock' => $request->get('stock'),
-            'image_paths' => $imagePaths, // Pass the array of image paths
-            'rating' => $request->get('rating'),
-            'accessibility' => $request->get('accessibility'),
+            'category_id' => $request->input('category_id'),
+            'brand_id' => $request->input('brand_id'),
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+            'stock' => $request->input('stock'),
+            'rating' => $request->input('rating'),
+            'accessibility' => $request->input('accessibility'),
         ]);
 
         return new ProductResource($product);
     }
 
-
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Product $product)
     {
         return new ProductResource($product);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Product $product)
     {
-        // Add image upload handling if needed
-//        $imagePaths = $product->image_paths;
-
-        $imagePaths = [];
-        if ($request->hasFile('image_paths')) {
-            foreach ($request->file('image_paths') as $file) {
-                $filename = time() . '-' . $file->getClientOriginalName();
-                $path = $file->storeAs('products', $filename, 'public');
-                $imagePaths[] = $path; // Store the path for each uploaded image
-            }
-        }
-
-        // Perform the update with the images
         $this->productRepository->update([
             'category_id' => $request->get('category_id'),
             'name' => $request->get('name'),
             'description' => $request->get('description'),
             'price' => $request->get('price'),
             'accessibility' => $request->get('accessibility'),
-            'image_paths' => $imagePaths, // Update image paths
         ], $product->id);
 
         return new ProductResource($product->refresh());
@@ -131,5 +100,21 @@ class ProductController extends Controller
         ], $product->id);
 
         return new ProductResource($product->refresh());
+    }
+
+    public function getProductByCategoryId(Category $category){
+        if(!$this->categoryRepository->isExists($category->id)) return response()->json([
+            'message' => 'Category not found'
+        ]);
+        $products = $this->productRepository->getByCategoryId($category->id);
+        return new ProductCollection($products);
+    }
+
+    public function getProductByBrandId(Brand $brand){
+        if(!$this->brandRepository->isExists($brand->id)) return response()->json([
+            'message' => 'Brand not found'
+        ]);
+        $products = $this->productRepository->getByBrandId($brand->id);
+        return new ProductCollection($products);
     }
 }

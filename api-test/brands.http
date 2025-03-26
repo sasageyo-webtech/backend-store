@@ -3,7 +3,7 @@ GET {{ host }}/api/brands
 Accept: application/json
 
 ### GET request to /api/brands/{brand} (Show Brand)
-GET {{ host }}/api/brands/6
+GET {{ host }}/api/brands/1
 Accept: application/json
 
 ### POST request to /api/brands (Create Brand)

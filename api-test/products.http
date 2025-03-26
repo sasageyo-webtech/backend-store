@@ -111,3 +111,10 @@ Content-Disposition: form-data; name="product_id"
 DELETE {{host}}/api/products/images/1
 Accept: application/json
 
+### GET request to /api/products/categories/{category} (Show Product by Category)
+GET {{ host }}/api/products/categories/1
+Accept: application/json
+
+### GET request to /api/products/brands/{brands} (Show Product by Brand)
+GET {{ host }}/api/products/brands/1
+Accept: application/json

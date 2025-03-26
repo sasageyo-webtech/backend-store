@@ -13,9 +13,7 @@ class BrandController extends Controller
 {
     public function __construct(
         private BrandRepository $brandRepository
-    )
-    {
-    }
+    ){}
 
     public function index()
     {
@@ -47,9 +45,6 @@ class BrandController extends Controller
         return new BrandResource($brand);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Brand $brand)
     {
         // TODO Validate update brand
@@ -71,9 +66,16 @@ class BrandController extends Controller
 
     public function destroy(Brand $brand)
     {
+        if($brand->products()->count()) {
+            return response()->json([
+                'message' => 'Brand has products associated with it',
+            ], 400);
+        }
         $this->brandRepository->delete($brand->id);
         return response()->json([
             'message' => 'Brand successfully deleted',
         ], 200);
     }
+
+
 }

@@ -34,6 +34,8 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::get('products', [ProductController::class, 'index'])->name('products.index');
     Route::get('products/search', [ProductController::class, 'search'])->name('products.search');
     Route::get('products/{product}', [ProductController::class, 'show']);
+    Route::get('products/categories/{category}', [ProductController::class, 'getProductByCategoryId'])->name('products.category');
+    Route::get('products/brands/{brand}', [ProductController::class, 'getProductByBrandId'])->name('products.brand');
 
     //category
     Route::get('categories', [CategoryController::class, 'index']);
@@ -70,7 +72,6 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::get('carts', [CartController::class, 'index'])->name('carts.index');
     Route::post('carts', [CartController::class, 'store']); // เพิ่มสินค้าลงในตะกร้า
     Route::delete('carts/{cart}', [CartController::class, 'destroy']); // ลบสินค้าจากตะกร้า
-//    Route::post('carts/confirm', [CartController::class, 'confirmOrder']); // ยืนยันการสั่งซื้อ
 
     //address_customers
     Route::get('address-customers', [AddressCustomerController::class, 'index'])->name('address-customers.index');

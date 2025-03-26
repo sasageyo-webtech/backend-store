@@ -15,4 +15,12 @@ class ProductRepository
     {
         return $this->model::where('name', 'LIKE', "%$name%")->get();
     }
+
+    public function getByCategoryId(int $categoryId): Collection {
+        return $this->model::where('category_id', $categoryId)->get();
+    }
+
+    public function getByBrandId(int $brandId): Collection {
+        return $this->model::where('brand_id', $brandId)->get();
+    }
 }
