@@ -43,11 +43,16 @@ class CartController extends Controller
         $amount = $request->input('amount');
 
 
-        $cart = Cart::updateOrCreate([
-            'customer_id' => $customer_id,
-            'product_id' => $product_id,
-            'quantity' => $amount,
-        ]);
+        // อัปเดตหรือสร้างใหม่
+        $cart = Cart::updateOrCreate(
+            [
+                'customer_id' => $customer_id,
+                'product_id' => $product_id,
+            ],
+            [
+                'quantity' => $amount, // เปลี่ยนค่าจำนวนสินค้า
+            ]
+        );
 
         return new CartResource($cart->refresh());
     }

@@ -14,8 +14,8 @@ Content-Type: application/json
 
 {
     "customer_id": 2,
-    "product_id": 5,
-    "amount": 20
+    "product_id": 2,
+    "amount": 50
 }
 
 ###DELETE request to /api/carts/{cart} (Delete Cart)

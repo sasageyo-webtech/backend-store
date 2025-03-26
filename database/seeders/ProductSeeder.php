@@ -20,9 +20,14 @@ class ProductSeeder extends Seeder
         if ($limit > $exits) {
             for ($i = 1; $i <= $limit; $i++) {
                 $product = Product::factory()->create();
-                ImageProduct::factory()->create([
-                    'product_id' => $product->id,
-                ]);
+
+                $numbs_image = rand(2, 5);
+                for($j = 1; $j <= $numbs_image; $j++) {
+                    ImageProduct::factory()->create([
+                        'product_id' => $product->id,
+                    ]);
+                }
+
             }
         }
     }
