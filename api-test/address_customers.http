@@ -1,5 +1,5 @@
 ### GET request to /api/address-customers (Show Address Customers)
-GET {{ host }}/api/address-customers?customer_id=2
+GET {{ host }}/api/address-customers?customer_id=51
 Accept: application/json
 Content-Type: application/json
 
@@ -15,7 +15,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "customer_id" : 2,
+    "customer_id" : 51,
     "name": "Jane Doe",
     "phone_number": "0987654321",
     "house_number": "456",

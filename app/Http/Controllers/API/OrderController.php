@@ -40,6 +40,7 @@ class OrderController extends Controller
     {
 
         $customer_id = $request->input('customer_id');
+        $address_customer_id = $request->input('address_customer_id');
 
         $customer = $this->customerRepository->getById($customer_id);
 
@@ -61,11 +62,13 @@ class OrderController extends Controller
             return $cart->product->price * $cart->quantity;
         });
 
+        $deliveryFee = 45;
 
         // สร้าง order
         $order = $this->orderRepository->create([
             'customer_id' => $customer_id,
-            'total_price' => $totalPrice,
+            'address_customer_id' => $address_customer_id,
+            'total_price' => $totalPrice + $deliveryFee,
         ]);
 
         // สร้าง payment
@@ -80,7 +83,7 @@ class OrderController extends Controller
             // ใช้ path ที่ได้ในการบันทึกลง payment
             $payment = $this->paymentRepository->create([
                 'order_id' => $order->id,
-                'amount' => $totalPrice,
+                'amount' => $totalPrice + $deliveryFee,
                 'method' => PaymentMethod::BANK_TRANSFER,
                 'image_receipt_path' => $path, // ใช้ path ที่ได้จากการอัปโหลด
             ]);
