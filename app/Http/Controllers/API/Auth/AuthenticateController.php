@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\Enums\UserRole;
 use App\Models\User;
+use App\Repositories\CustomerRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -15,6 +16,7 @@ class AuthenticateController extends Controller
 {
     public function __construct(
         private UserRepository $userRepository,
+        private CustomerRepository $customerRepository,
     ){}
 
     //TODO return user response
@@ -84,6 +86,11 @@ class AuthenticateController extends Controller
             'gender' => $gender,
             'password' => Hash::make($password),
         ]);
+
+        $customer = $this->customerRepository->create([
+            'user_id' => $user->id,
+        ]);
+
 
         return response()->json([
             'message' => 'User registered successfully',

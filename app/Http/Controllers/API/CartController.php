@@ -23,7 +23,12 @@ class CartController extends Controller
 
     public function index(Request $request)
     {
-        $customer_id = $request->input('customer_id');
+        $customer_id = $request->query('customer_id');
+        if (!$customer_id) {
+            return response()->json([
+                'message' => 'customer_id is required'
+            ], 400);
+        }
         $carts = $this->cartRepository->getByCustomerId($customer_id);
         return new CartCollection($carts);
     }

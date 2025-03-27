@@ -17,6 +17,8 @@ class UserResource extends JsonResource
     {
         $data = [
             'user_id' => $this->id,
+            'customer_id' => $this->customer?->id,
+            'staff_id' => $this->staff?->id,
             'username' => $this->username,
             'firstname' => $this->firstname,
             'lastname' => $this->lastname,
@@ -29,12 +31,6 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'token' => $this->createToken('token')->plainTextToken,
         ];
-
-        if ($this->role === UserRole::STAFF) {
-            $data['staff_id'] = $this->id;
-        } else {
-            $data['customer_id'] = $this->id;
-        }
 
         return $data;
     }
