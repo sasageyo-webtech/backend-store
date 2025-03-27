@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Enums\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,7 +15,7 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        $data = [
             'user_id' => $this->id,
             'username' => $this->username,
             'firstname' => $this->firstname,
@@ -28,5 +29,13 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'token' => $this->createToken('token')->plainTextToken,
         ];
+
+        if ($this->role === UserRole::STAFF) {
+            $data['staff_id'] = $this->id;
+        } else {
+            $data['customer_id'] = $this->id;
+        }
+
+        return $data;
     }
 }

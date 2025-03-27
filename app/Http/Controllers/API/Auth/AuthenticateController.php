@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthenticateController extends Controller
 {
@@ -29,16 +30,7 @@ class AuthenticateController extends Controller
             ])->setStatusCode(404);
         }
         if (Hash::check($password, $user->password)) {
-            return response()->json([
-                new UserResource($user),
-//                'user_id' => $user->id,
-//                'username' => $user->username,
-//                'email' => $user->email,
-//                'phone_number' => $user->phone_number,
-//                'image_path' => $user->image_path,
-//                'role' => $user->role,
-//                'token' => $user->createToken('token')->plainTextToken,
-            ]);
+            return new UserResource($user);
         }
 
         return response()->json([
@@ -47,12 +39,20 @@ class AuthenticateController extends Controller
     }
 
     public function register(Request $request) {
-        // TODO Validate User Register
-//        $request->validate([
-//            'name' => 'required|string|max:255',
+//        $validator = Validator::make($request->all(), [
+//            'username' => 'required|string|max:255|unique:users',
 //            'email' => 'required|string|email|max:255|unique:users',
+//            'firstname' => 'required|string|max:255',
+//            'lastname' => 'required|string|max:255',
+//            'gender' => 'required|string|in:MALE,FEMALE',
 //            'password' => 'required|string|min:8|confirmed',
 //        ]);
+//
+//        if ($validator->fails()) {
+//            return response()->json([
+//                'message' => $validator->errors(),
+//            ], 422);
+//        }
 
         $username = $request->input('username');
         $email = $request->input('email');
@@ -66,13 +66,13 @@ class AuthenticateController extends Controller
         if($user) {
             return response()->json([
                 "message" => "this email is already registered",
-            ], 400  );
+            ], 409   );
         }
 
         if($password != $confirm_password) {
             return response()->json([
                 'message' => 'Passwords do not match',
-            ], 400);
+            ], 200);
         }
 
 
