@@ -25,17 +25,17 @@ class ImageProductFactory extends Factory
     }
 
         protected function getRandomImagePath(): string
-    {
-        // โฟลเดอร์ที่เก็บรูปภาพ
-        $imagesFolder = 'products';
+        {
+            // โฟลเดอร์ที่เก็บรูปภาพ
+            $imagesFolder = 'products';
 
-        // ดึงรายชื่อไฟล์ทั้งหมดในโฟลเดอร์
-        $files = Storage::disk('public')->files($imagesFolder);
+            // ดึงรายชื่อไฟล์ทั้งหมดในโฟลเดอร์
+            $files = Storage::disk('public')->files($imagesFolder);
 
-        // เลือกไฟล์ภาพแบบสุ่ม
-        $randomFile = $files[array_rand($files)];
+            // เลือกไฟล์ภาพแบบสุ่ม
+            $randomFile = $files[array_rand($files)];
 
-        // คืนค่า path ของภาพที่เลือก
-        return $randomFile;
-    }
+            // คืนค่า path ของภาพที่เลือก
+            return $randomFile;
+        }
 }

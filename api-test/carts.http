@@ -4,7 +4,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "customer_id": 2
+    "customer_id": 1
 }
 
 ### POST request to /api/carts (Create Cart)

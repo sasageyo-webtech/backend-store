@@ -15,6 +15,7 @@ use App\Repositories\CustomerRepository;
 use App\Repositories\OrderProductRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\PaymentRepository;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -25,6 +26,7 @@ class OrderController extends Controller
         private CartRepository $cartRepository,
         private CustomerRepository $customerRepository,
         private OrderProductRepository $orderProductRepository,
+        private ProductRepository $productRepository,
     ){}
 
     public function index()
@@ -47,6 +49,13 @@ class OrderController extends Controller
 
         if ($carts->isEmpty()) return response()->json(['message' => 'Cart is empty'], 400);
 
+        // ตรวจสอบว่ามีสินค้าเพียงพอหรือไม่
+        foreach ($carts as $cart) {
+            $product = $this->productRepository->getById($cart->product_id);
+            if ($product->stock < $cart->quantity) {
+                return response()->json(['message' => 'Insufficient stock for product: ' . $product->name], 400);
+            }
+        }
         // สร้าง order
         $totalPrice = $carts->sum(function($cart) {
             return $cart->product->price * $cart->quantity;
@@ -89,6 +98,10 @@ class OrderController extends Controller
                 'quantity' => $cart->quantity,
                 'total_price' => $cart->product->price * $cart->quantity,
             ]);
+        // ลบ stock
+            $product = $this->productRepository->getById($cart->product_id);
+            $product->stock -= $cart->quantity;
+            $this->productRepository->update(['stock' => $product->stock], $product->id);
         }
 
 
