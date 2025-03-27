@@ -13,7 +13,7 @@ class CustomerSeeder extends Seeder
      */
     public function run(): void
     {
-        $limit = 50;
+        $limit = 30;
         $exits = Customer::count();
         if ($limit > $exits) {
             Customer::factory()->count($limit)->create();

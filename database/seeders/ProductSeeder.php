@@ -15,13 +15,13 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        $limit = 20;
+        $limit = 100;
         $exits = Product::count();
         if ($limit > $exits) {
             for ($i = 1; $i <= $limit; $i++) {
                 $product = Product::factory()->create();
 
-                $numbs_image = rand(2, 5);
+                $numbs_image = rand(3, 5);
                 for($j = 1; $j <= $numbs_image; $j++) {
                     ImageProduct::factory()->create([
                         'product_id' => $product->id,

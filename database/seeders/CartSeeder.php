@@ -15,7 +15,7 @@ class CartSeeder extends Seeder
      */
     public function run(): void
     {
-        $limit = 50;
+        $limit = 100;
         $exits = Cart::count();
         if ($limit > $exits) {
             Cart::factory()->count($limit)->create();

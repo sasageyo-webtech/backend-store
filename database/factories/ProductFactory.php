@@ -21,16 +21,40 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->name();
+        $name = [
+            'Mizumi',
+            'Orental Princess',
+            'Rojukiss',
+            'Srichand',
+            'Mistine',
+            'Hydrating Night Cream',
+            'Ultra Repair Face Cream',
+            'Anti-Aging Collagen Cream',
+            'Daily Moisture Lotion',
+            'Hydrating Body Lotion',
+            'Lavender Relaxing Lotion',
+            'Micellar Water Cleanser',
+            'Oil-Free Eye Makeup Remover',
+            'Deep Cleansing Balm',
+            'Gentle Foaming Cleanser',
+            'Deep Pore Cleansing Gel',
+            'Charcoal Detox Cleanser',
+            'Hydrating Rose Toner',
+            'Pore-Tightening Witch Hazel Toner',
+            ' Brightening Vitamin C Toner',
+            'Hydrating Essence Mist',
+            'Fermented Rice Water Essence',
+            'Snail Mucin Repair Essence'
+        ];
 
 //        $image_paths = collect(range(1, rand(2, 3)))->map(fn () => $this->getRandomImagePath())->all();
 
         return [
             'category_id' => Category::inRandomOrder()->first()->id,
             'brand_id' => Brand::inRandomOrder()->first()->id,
-            'name' => $name,
+            'name' => $this->faker->randomElement($name),
             'description' => $this->faker->realText(),
-            'price' => $this->faker->numberBetween(500, 10000),
+            'price' => $this->faker->numberBetween(50, 1000),
             'stock' => $this->faker->numberBetween(0, 100),
             'rating' => $this->faker->numberBetween(0, 5),
             'accessibility' => $this->faker->randomElement([ProductAccessibility::PUBLIC, ProductAccessibility::PRIVATE]),
