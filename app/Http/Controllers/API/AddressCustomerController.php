@@ -19,7 +19,7 @@ class AddressCustomerController extends Controller
 
     public function index(Request $request){
         try {
-            $customer_id = $request->input('customer_id');
+            $customer_id = $request->query('customer_id');
             if (!$customer_id) return response()->json(['error' => 'Customer ID is required'], 400);
             $addressCustomers = $this->addressCustomerRepository->getByCustomerId($customer_id);
             return new AddressCustomerCollection($addressCustomers);

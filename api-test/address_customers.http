@@ -1,14 +1,11 @@
 ### GET request to /api/address-customers (Show Address Customers)
-GET {{ host }}/api/address-customers
+GET {{ host }}/api/address-customers?customer_id=2
 Accept: application/json
 Content-Type: application/json
 
-{
-    "customer_id" : 2
-}
 
 ### GET request to /api/address-customers/{addressCustomer} (Show Address Customer)
-GET {{ host }}/api/address-customers/9
+GET {{ host }}/api/address-customers/1
 Accept: application/json
 
 
