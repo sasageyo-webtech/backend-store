@@ -26,7 +26,7 @@ class OrderResource extends JsonResource
                 'payment_id' => $this->payment->id,
                 'amount' => $this->payment->amount,
                 'method' => $this->payment->method,
-                'image_receipt_path' => $this->payment->image_receipt_path,
+                'image_receipt_path' => $this->payment->getImageUrl()   ,
             ],
             'products' => $this->order_products->map(function ($order_product) {
                 $product = $order_product->product;

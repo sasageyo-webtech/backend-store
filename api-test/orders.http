@@ -5,7 +5,7 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
 ------WebKitFormBoundary
 Content-Disposition: form-data; name="customer_id"
 
-51
+31
 ------WebKitFormBoundary
 Content-Disposition: form-data; name="address_customer_id"
 
@@ -22,7 +22,7 @@ GET {{ host }}/api/staffs/orders
 Accept: application/json
 
 ### GET request to /api/customers/orders
-GET {{ host }}/api/customers/orders/51
+GET {{ host }}/api/customers/orders/31
 Accept: application/json
 
 ### GET request to /api/orders/{order}
@@ -30,7 +30,7 @@ GET {{ host }}/api/orders/1
 Accept: application/json
 
 ### PATCH request to /api/orders/{order}
-PATCH {{ host }}/api/orders/1
+PATCH {{ host }}/api/orders/2
 Accept: application/json
 Content-Type: application/json
 

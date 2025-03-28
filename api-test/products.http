@@ -21,47 +21,13 @@ Content-Type: application/json
 ### POST request to /api/products (Create Product)
 POST {{ host }}/api/products
 Accept: application/json
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+Content-Type: application/json
 
-------WebKitFormBoundary
-Content-Disposition: form-data; name="category_id"
+{
+    name,
+    descript
+}
 
-1
-------WebKitFormBoundary
-Content-Disposition: form-data; name="brand_id"
-
-2
-------WebKitFormBoundary
-Content-Disposition: form-data; name="name"
-
-Sample Product
-------WebKitFormBoundary
-Content-Disposition: form-data; name="description"
-
-This is a sample product
-------WebKitFormBoundary
-Content-Disposition: form-data; name="price"
-
-123
-------WebKitFormBoundary
-Content-Disposition: form-data; name="stock"
-
-10
-------WebKitFormBoundary
-Content-Disposition: form-data; name="rating"
-
-4.5
-------WebKitFormBoundary
-Content-Disposition: form-data; name="accessibility"
-
-PRIVATE
-------WebKitFormBoundary
-Content-Disposition: form-data; name="image_paths"; filename="img.png"
-Content-Type: image/png
-
-< ./img.png
-
-------WebKitFormBoundary--
 
 
 ### PUT request to /api/products/{id} (Update Product)
