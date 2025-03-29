@@ -22,9 +22,10 @@ class ProductController extends Controller
     ) {}
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productRepository->get(20);
+        $perPage = $request->input('per_page', 10); // Default to 10 per page
+        $products = $this->productRepository->paginate($perPage);
         return new ProductCollection($products);
     }
 
