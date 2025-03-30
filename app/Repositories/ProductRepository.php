@@ -11,11 +11,6 @@ class ProductRepository
     use SimpleCRUD;
     private string $model = Product::class;
 
-    public function get($perPage = 20)
-    {
-        return Product::paginate($perPage);
-    }
-
     public function filterByName(string $name): Collection
     {
         return $this->model::where('name', 'LIKE', "%$name%")->get();
@@ -28,4 +23,9 @@ class ProductRepository
     public function getByBrandId(int $brandId): Collection {
         return $this->model::where('brand_id', $brandId)->get();
     }
+
+//    public function ordered(): Collection
+//    {
+//        return $this->model::orderBy('created_at', 'desc')->get();
+//    }
 }
