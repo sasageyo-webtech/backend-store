@@ -14,7 +14,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "query": "name product"
+    "query": "Gentle Foaming Cleanser"
 }
 
 
@@ -49,12 +49,12 @@ DELETE {{ host }}/api/products/20
 Accept: application/json
 
 ### PATCH request to /api/products/{product}/add-stock (Add Stock Product)
-PATCH {{ host }}/api/products/2/add-stock
+PATCH {{ host }}/api/products/15/add-stock
 Accept: application/json
 Content-Type: application/json
 
 {
-    "amount" : 10
+    "amount" : 2
 }
 
 ### POST request to upload an image for a product

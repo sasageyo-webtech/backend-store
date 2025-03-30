@@ -5,16 +5,16 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
 ------WebKitFormBoundary
 Content-Disposition: form-data; name="customer_id"
 
-31
+1
 ------WebKitFormBoundary
 Content-Disposition: form-data; name="address_customer_id"
 
 1
 ------WebKitFormBoundary
-Content-Disposition: form-data; name="image_receipt_path"; filename="img.png"
-Content-Type: image/png
+Content-Disposition: form-data; name="image_receipt_path"; filename="slip.jpg"
+Content-Type: image/jpg
 
-< ./img.png
+< ./slip.jpg
 ------WebKitFormBoundary--
 
 ### GET request to /api/staffs/orders
@@ -30,7 +30,7 @@ GET {{ host }}/api/orders/1
 Accept: application/json
 
 ### PATCH request to /api/orders/{order}
-PATCH {{ host }}/api/orders/2
+PATCH {{ host }}/api/orders/6
 Accept: application/json
 Content-Type: application/json
 

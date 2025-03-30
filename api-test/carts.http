@@ -1,5 +1,5 @@
 ### GET request to /api/carts (Show carts customer)
-GET {{ host }}/api/carts?customer_id=51
+GET {{ host }}/api/carts?customer_id=1
 Accept: application/json
 Content-Type: application/json
 
@@ -10,9 +10,9 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "customer_id": 31,
-    "product_id": 23,
-    "amount": 1
+    "customer_id": 1,
+    "product_id": 74,
+    "amount": 2
 }
 
 ###DELETE request to /api/carts/{cart} (Delete Cart)

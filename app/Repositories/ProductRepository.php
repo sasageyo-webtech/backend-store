@@ -13,7 +13,7 @@ class ProductRepository
 
     public function filterByName(string $name): Collection
     {
-        return $this->model::where('name', 'LIKE', "%$name%")->get();
+        return $this->model::whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($name) . "%"])->get();
     }
 
     public function getByCategoryId(int $categoryId): Collection {
