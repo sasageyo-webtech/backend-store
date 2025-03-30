@@ -66,7 +66,7 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::delete('products/{product}', [ProductController::class, 'destroy']);
     Route::patch('products/{product}/add-stock', [ProductController::class, 'addStock'])->name('products.add.stock');
     Route::post('products/images', [ImageProductController::class, 'store'])->name('products.images.store');
-    Route::delete('products/images/{imageProduct}', [ImageProductController::class, 'destroy'])->name('products.images.destroy');
+    Route::delete('products/images/{image_product_id}', [ImageProductController::class, 'destroy'])->name('products.images.destroy');
 
     //carts
     Route::get('carts', [CartController::class, 'index'])->name('carts.index');
