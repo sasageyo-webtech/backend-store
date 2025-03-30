@@ -4,7 +4,7 @@ Accept: application/json
 
 
 ### GET request to /api/products/{id} (Show Product)
-GET {{ host }}/api/products/1
+GET {{ host }}/api/products/104
 Accept: application/json
 
 
@@ -24,8 +24,12 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    name,
-    descript
+    "category_id" : 8,
+    "brand_id" : 5,
+    "name" : "product test",
+    "description" : "Description test",
+    "price" : -1
+
 }
 
 
@@ -45,11 +49,11 @@ Content-Type: application/json
 }
 
 ### DELETE request to /api/products/{id} (Delete Product)
-DELETE {{ host }}/api/products/20
+DELETE {{ host }}/api/products/106
 Accept: application/json
 
 ### PATCH request to /api/products/{product}/add-stock (Add Stock Product)
-PATCH {{ host }}/api/products/15/add-stock
+PATCH {{ host }}/api/products/120/add-stock
 Accept: application/json
 Content-Type: application/json
 
