@@ -24,7 +24,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = $this->productRepository->getAll() ;
+        $products = $this->productRepository->get(20);
         return new ProductCollection($products);
     }
 
@@ -82,7 +82,6 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-        $query = Strtolower($query);
         $products = $this->productRepository->filterByName($query);
         return new ProductCollection($products);
     }

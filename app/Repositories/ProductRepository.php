@@ -23,4 +23,9 @@ class ProductRepository
     public function getByBrandId(int $brandId): Collection {
         return $this->model::where('brand_id', $brandId)->get();
     }
+
+//    public function ordered(): Collection
+//    {
+//        return $this->model::orderBy('created_at', 'desc')->get();
+//    }
 }
