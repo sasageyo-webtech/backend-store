@@ -1,39 +1,42 @@
 ### POST request to /api/orders (Create Order)
-POST {{ host }}/api/customers/orders
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+POST /api/customers/orders HTTP/1.1
+Host: localhost
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryABC123
+Accept: application/json
 
-------WebKitFormBoundary
+------WebKitFormBoundaryABC123
 Content-Disposition: form-data; name="customer_id"
 
 1
-------WebKitFormBoundary
+------WebKitFormBoundaryABC123
 Content-Disposition: form-data; name="address_customer_id"
 
 1
-------WebKitFormBoundary
+------WebKitFormBoundaryABC123
 Content-Disposition: form-data; name="image_receipt_path"; filename="slip1.png"
-Content-Type: image/jpg
+Content-Type: image/png
 
 < ./images/slip1.png
-------WebKitFormBoundary--
+------WebKitFormBoundaryABC123--
+
 
 ### GET request to /api/staffs/orders
 GET {{ host }}/api/staffs/orders
 Accept: application/json
 
-### GET request to /api/customers/orders
-GET {{ host }}/api/customers/orders/31
+### GET request to /api/customers/orders/{customer_id}
+GET {{ host }}/api/customers/orders/1
 Accept: application/json
 
-### GET request to /api/orders/{order}
-GET {{ host }}/api/orders/1
+### GET request to /api/orders/{order_id}
+GET {{ host }}/api/orders/3
 Accept: application/json
 
-### PATCH request to /api/orders/{order}
-PATCH {{ host }}/api/orders/6
+### PATCH request to /api/orders/{order_id}
+PATCH {{ host }}/api/orders/2
 Accept: application/json
 Content-Type: application/json
 
 {
-    "status": "PENDING"
+    "status": "APPROVED"
 }

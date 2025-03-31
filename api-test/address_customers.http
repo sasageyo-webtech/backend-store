@@ -5,7 +5,7 @@ Content-Type: application/json
 
 
 ### GET request to /api/address-customers/{addressCustomer} (Show Address Customer)
-GET {{ host }}/api/address-customers/1
+GET {{ host }}/api/address-customers/8
 Accept: application/json
 
 

@@ -40,16 +40,16 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     //category
     Route::get('categories', [CategoryController::class, 'index']);
     Route::post('categories', [CategoryController::class, 'store']);
-    Route::get('categories/{category}', [CategoryController::class, 'show']);
-    Route::put('categories/{category}', [CategoryController::class, 'update']);
-    Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
+    Route::get('categories/{category_id}', [CategoryController::class, 'show']);
+    Route::put('categories/{category_id}', [CategoryController::class, 'update']);
+    Route::delete('categories/{category_id}', [CategoryController::class, 'destroy']);
 
     //brands
     Route::get('brands', [BrandController::class, 'index'])->name('brands.index');
-    Route::get('brands/{brand}', [BrandController::class, 'show'])->name('brands.show');
+    Route::get('brands/{brand_id}', [BrandController::class, 'show'])->name('brands.show');
     Route::post('brands', [BrandController::class, 'store'])->name('brands.store');
-    Route::put('brands/{brand}', [BrandController::class, 'update'])->name('brands.update');
-    Route::delete('brands/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
+    Route::put('brands/{brand_id}', [BrandController::class, 'update'])->name('brands.update');
+    Route::delete('brands/{brand_id}', [BrandController::class, 'destroy'])->name('brands.destroy');
 
 
     //<------------------ Must Auth ------------------>//
@@ -73,7 +73,7 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     //carts
     Route::get('carts', [CartController::class, 'index'])->name('carts.index');
     Route::post('carts', [CartController::class, 'store']); // เพิ่มสินค้าลงในตะกร้า
-    Route::delete('carts/{cart}', [CartController::class, 'destroy']); // ลบสินค้าจากตะกร้า
+    Route::delete('carts/{cart_id}', [CartController::class, 'destroy']); // ลบสินค้าจากตะกร้า
 
     //address_customers
     Route::get('address-customers', [AddressCustomerController::class, 'index'])->name('address-customers.index');
@@ -84,10 +84,10 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
 
     //orders
     Route::get('staffs/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('customers/orders/{customer}', [OrderController::class, 'getOrderCustomer'])->name('orders.getOrderCustomer');
+    Route::get('customers/orders/{customer_id}', [OrderController::class, 'getOrderCustomer'])->name('orders.getOrderCustomer');
     Route::post('customers/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::patch('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+    Route::get('orders/{order_id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::patch('orders/{order_id}', [OrderController::class, 'update'])->name('orders.update');
 });
 
 Route::middleware(["throttle:api", "auth:sanctum"])->as('api.')->group(function() {
