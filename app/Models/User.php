@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -74,5 +75,13 @@ class User extends Authenticatable
     public function isStaff(): bool
     {
         return $this->role === UserRole::STAFF;
+    }
+
+    public function getImagePath()  {
+        return  Storage::url($this->image_path);
+    }
+
+    public function getImageUrl()  {
+        return env('APP_URL', 'http://localhost') . $this->getImagePath();
     }
 }

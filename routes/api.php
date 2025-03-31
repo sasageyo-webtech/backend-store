@@ -58,6 +58,8 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/{user}', [UserController::class, 'show'])->name('user.show');
     Route::put('users/{user}/profile', [ProfileController::class, 'update'])->name('user.profile.update');
+    Route::post('users/{user}/profile/image', [ProfileController::class, 'updateImage'])->name('user.profile.image.update');
+    Route::delete('users/{user}/profile/image', [ProfileController::class, 'deleteImage'])->name('user.profile.image.delete');
     Route::delete('users/revoke', [AuthenticateController::class, 'revoke'])->name('user.revoke');
 
     //products
@@ -66,7 +68,7 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::delete('products/{product}', [ProductController::class, 'destroy']);
     Route::patch('products/{product}/add-stock', [ProductController::class, 'addStock'])->name('products.add.stock');
     Route::post('products/images', [ImageProductController::class, 'store'])->name('products.images.store');
-    Route::delete('products/images/{imageProduct}', [ImageProductController::class, 'destroy'])->name('products.images.destroy');
+    Route::delete('products/images/{image_product_id}', [ImageProductController::class, 'destroy'])->name('products.images.destroy');
 
     //carts
     Route::get('carts', [CartController::class, 'index'])->name('carts.index');

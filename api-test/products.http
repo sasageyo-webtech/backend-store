@@ -4,7 +4,7 @@ Accept: application/json
 
 
 ### GET request to /api/products/{id} (Show Product)
-GET {{ host }}/api/products/104
+GET {{ host }}/api/products/1
 Accept: application/json
 
 
@@ -49,7 +49,7 @@ Content-Type: application/json
 }
 
 ### DELETE request to /api/products/{id} (Delete Product)
-DELETE {{ host }}/api/products/106
+DELETE {{ host }}/api/products/150
 Accept: application/json
 
 ### PATCH request to /api/products/{product}/add-stock (Add Stock Product)
@@ -67,10 +67,10 @@ Accept: application/json
 Content-Type: multipart/form-data boundary=----WebKitFormBoundary
 
 ------WebKitFormBoundary
-Content-Disposition: form-data; name="image_file"; filename="3.png"
+Content-Disposition: form-data; name="image_file"; filename="product.png"
 Content-Type: image/png
 
-< ./3.png
+< ./images/product.png
 ------WebKitFormBoundary
 Content-Disposition: form-data; name="product_id"
 
@@ -78,7 +78,7 @@ Content-Disposition: form-data; name="product_id"
 ------WebKitFormBoundary--
 
 ### DELETE request to delete an image product by ID
-DELETE {{host}}/api/products/images/1
+DELETE {{host}}/api/products/images/1000
 Accept: application/json
 
 ### GET request to /api/products/categories/{category} (Show Product by Category)

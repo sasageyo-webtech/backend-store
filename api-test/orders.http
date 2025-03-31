@@ -11,10 +11,10 @@ Content-Disposition: form-data; name="address_customer_id"
 
 1
 ------WebKitFormBoundary
-Content-Disposition: form-data; name="image_receipt_path"; filename="slip.jpg"
+Content-Disposition: form-data; name="image_receipt_path"; filename="slip1.png"
 Content-Type: image/jpg
 
-< ./slip.jpg
+< ./images/slip1.png
 ------WebKitFormBoundary--
 
 ### GET request to /api/staffs/orders
