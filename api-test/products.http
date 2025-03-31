@@ -4,7 +4,7 @@ Accept: application/json
 
 
 ### GET request to /api/products/{id} (Show Product)
-GET {{ host }}/api/products/104
+GET {{ host }}/api/products/1
 Accept: application/json
 
 
@@ -67,10 +67,10 @@ Accept: application/json
 Content-Type: multipart/form-data boundary=----WebKitFormBoundary
 
 ------WebKitFormBoundary
-Content-Disposition: form-data; name="image_file"; filename="3.png"
+Content-Disposition: form-data; name="image_file"; filename="product.png"
 Content-Type: image/png
 
-< ./3.png
+< ./images/product.png
 ------WebKitFormBoundary
 Content-Disposition: form-data; name="product_id"
 

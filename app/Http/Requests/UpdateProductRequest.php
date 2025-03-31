@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Enums\ProductAccessibility;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -27,7 +28,7 @@ class UpdateProductRequest extends FormRequest
             ],
             'description' => ['nullable', 'string'],
             'price' => ['required', 'numeric', 'min:0'],
-            'accessibility' => ['required', Rule::in(['PUBLIC', 'PRIVATE'])],
+            'accessibility' => ['required', Rule::in([ProductAccessibility::PUBLIC, ProductAccessibility::PRIVATE])],
         ];
     }
 

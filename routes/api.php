@@ -58,6 +58,8 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/{user}', [UserController::class, 'show'])->name('user.show');
     Route::put('users/{user}/profile', [ProfileController::class, 'update'])->name('user.profile.update');
+    Route::post('users/{user}/profile/image', [ProfileController::class, 'updateImage'])->name('user.profile.image.update');
+    Route::delete('users/{user}/profile/image', [ProfileController::class, 'deleteImage'])->name('user.profile.image.delete');
     Route::delete('users/revoke', [AuthenticateController::class, 'revoke'])->name('user.revoke');
 
     //products

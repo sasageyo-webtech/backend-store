@@ -17,13 +17,8 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = $this->userRepository->get(10);
-        $total = $this->userRepository->count();
-
-        return response()->json([
-            'data' => new UserCollection($users),
-            'total' => $total,
-        ]);
+        $users = $this->userRepository->get(20);
+        return new UserCollection($users);
     }
 
 
@@ -31,5 +26,7 @@ class UserController extends Controller
     {
         return new UserResource($user);
     }
+
+
 
 }
