@@ -4,7 +4,7 @@ Accept: application/json
 
 
 ### GET request to /api/categories (Show Category)
-GET {{ host }}/api/categories/1
+GET {{ host }}/api/categories/10
 Accept: application/json
 
 
@@ -23,7 +23,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "name" : "test0"
+    "name" : "high"
 }
 
 ### DELETE request to /api/categories/{id} (Delete Category)

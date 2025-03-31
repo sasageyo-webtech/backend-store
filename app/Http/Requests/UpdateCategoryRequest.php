@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateBrandRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -19,7 +19,7 @@ class UpdateBrandRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                'unique:brands,name',
+                'unique:categories,name',
             ],
         ];
     }
@@ -27,10 +27,10 @@ class UpdateBrandRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'The brand name is required.',
-            'name.string' => 'The brand name must be a string.',
-            'name.max' => 'The brand name must not exceed 255 characters.',
-            'name.unique' => 'The brand name already exists in the system.',
+            'name.required' => 'The category name is required.',
+            'name.string' => 'The category name must be a string.',
+            'name.max' => 'The category name must not exceed 255 characters.',
+            'name.unique' => 'The category name already exists in the system.',
         ];
     }
 }

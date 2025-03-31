@@ -40,9 +40,9 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     //category
     Route::get('categories', [CategoryController::class, 'index']);
     Route::post('categories', [CategoryController::class, 'store']);
-    Route::get('categories/{category}', [CategoryController::class, 'show']);
-    Route::put('categories/{category}', [CategoryController::class, 'update']);
-    Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
+    Route::get('categories/{category_id}', [CategoryController::class, 'show']);
+    Route::put('categories/{category_id}', [CategoryController::class, 'update']);
+    Route::delete('categories/{category_id}', [CategoryController::class, 'destroy']);
 
     //brands
     Route::get('brands', [BrandController::class, 'index'])->name('brands.index');

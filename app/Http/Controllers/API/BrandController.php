@@ -93,6 +93,9 @@ class BrandController extends Controller
         if($brand->products->count())
             return response()->json([
                 'message' => 'Brand has products associated with it',
+                'errors' => [
+                    'brand' => 'Brand has products associated with it'
+                ]
             ], 422);
 
 
