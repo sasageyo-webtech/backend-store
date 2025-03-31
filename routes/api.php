@@ -33,9 +33,9 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     //products
     Route::get('products', [ProductController::class, 'index'])->name('products.index');
     Route::get('products/search', [ProductController::class, 'search'])->name('products.search');
-    Route::get('products/{product}', [ProductController::class, 'show']);
-    Route::get('products/categories/{category}', [ProductController::class, 'getProductByCategoryId'])->name('products.category');
-    Route::get('products/brands/{brand}', [ProductController::class, 'getProductByBrandId'])->name('products.brand');
+    Route::get('products/{product_id}', [ProductController::class, 'show']);
+    Route::get('products/categories/{category_id}', [ProductController::class, 'getProductByCategoryId'])->name('products.category');
+    Route::get('products/brands/{brand_id}', [ProductController::class, 'getProductByBrandId'])->name('products.brand');
 
     //category
     Route::get('categories', [CategoryController::class, 'index']);
@@ -64,9 +64,9 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
 
     //products
     Route::post('products', [ProductController::class, 'store'])->name('products.store');
-    Route::put('products/{product}', [ProductController::class, 'update']);
-    Route::delete('products/{product}', [ProductController::class, 'destroy']);
-    Route::patch('products/{product}/add-stock', [ProductController::class, 'addStock'])->name('products.add.stock');
+    Route::put('products/{product_id}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('products/{product_id}', [ProductController::class, 'destroy']);
+    Route::patch('products/{product_id}/add-stock', [ProductController::class, 'addStock'])->name('products.add.stock');
     Route::post('products/images', [ImageProductController::class, 'store'])->name('products.images.store');
     Route::delete('products/images/{image_product_id}', [ImageProductController::class, 'destroy'])->name('products.images.destroy');
 

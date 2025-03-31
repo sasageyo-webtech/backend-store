@@ -16,19 +16,20 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['required', 'exists:categories,id'],
-            'brand_id' => ['required', 'exists:brands,id'],
+            'category_id' => ['sometimes', 'required', 'exists:categories,id'],
+            'brand_id' => ['sometimes', 'required', 'exists:brands,id'],
             'name' => [
+                'sometimes',
                 'required',
                 'string',
                 'max:255',
                 Rule::unique('products', 'name')
                     ->where(fn ($query) => $query->where('brand_id', $this->brand_id))
-                    ->ignore($this->product),
+                    ->ignore($this->route('product_id')),
             ],
-            'description' => ['nullable', 'string'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'accessibility' => ['required', Rule::in([ProductAccessibility::PUBLIC, ProductAccessibility::PRIVATE])],
+            'description' => ['sometimes', 'nullable', 'string'],
+            'price' => ['sometimes', 'required', 'numeric', 'min:0'],
+            'accessibility' => ['sometimes', 'required', Rule::in([ProductAccessibility::PUBLIC, ProductAccessibility::PRIVATE])],
         ];
     }
 
