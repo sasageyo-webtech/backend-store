@@ -29,7 +29,6 @@ Content-Type: application/json
     "name" : "product test",
     "description" : "Description test",
     "price" : -1
-
 }
 
 
@@ -53,12 +52,12 @@ DELETE {{ host }}/api/products/150
 Accept: application/json
 
 ### PATCH request to /api/products/{product}/add-stock (Add Stock Product)
-PATCH {{ host }}/api/products/120/add-stock
+PATCH {{ host }}/api/products/99/add-stock
 Accept: application/json
 Content-Type: application/json
 
 {
-    "amount" : 2
+    "amount" : 1
 }
 
 ### POST request to upload an image for a product

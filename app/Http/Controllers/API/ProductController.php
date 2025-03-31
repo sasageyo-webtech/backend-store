@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddStockProductRequest;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Enums\ProductAccessibility;
 use App\Models\Product;
 use App\Repositories\BrandRepository;
 use App\Repositories\CategoryRepository;
@@ -41,32 +43,51 @@ class ProductController extends Controller
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'price' => $request->input('price'),
+            'accessibility' => ProductAccessibility::PRIVATE,
         ]);
 
         return new ProductResource($product->refresh());
     }
 
-    public function show(Product $product)
+    public function show(int $product_id)
     {
+        if(!$this->productRepository->isExists($product_id))
+            return response()->json([
+                'message' => 'Product not found',
+                'errors' => [
+                    'product_id' => "The product id {$product_id} does not exist",
+                ]
+            ]);
+
+        $product = $this->productRepository->getById($product_id);
         return new ProductResource($product);
     }
 
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, int $product_id)
     {
         $request->validated();
 
+        if(!$this->productRepository->isExists($product_id))
+            return response()->json([
+                'message' => 'Product not found',
+                'errors' => [
+                    'product_id' => "The product id {$product_id} does not exist",
+                ]
+            ]);
+
+        $product = $this->productRepository->getById($product_id);
+
         $this->productRepository->update([
-            'category_id' => $request->input('category_id'),
-            'brand_id' => $request->input('brand_id'),
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            'price' => $request->input('price'),
-            'accessibility' => $request->input('accessibility'),
+            'category_id' => $request->input('category_id', $product->category_id),
+            'brand_id' => $request->input('brand_id', $product->brand_id),
+            'name' => $request->input('name', $product->name),
+            'description' => $request->input('description', $product->description),
+            'price' => $request->input('price', $product->price),
+            'accessibility' => $request->input('accessibility', $product->accessibility),
         ], $product->id);
 
         return new ProductResource($product->refresh());
     }
-
 
     public function destroy(int $id)
     {
@@ -112,32 +133,21 @@ class ProductController extends Controller
         return new ProductCollection($products);
     }
 
-    public function addStock(Request $request, Product $product){
+    public function addStock(AddStockProductRequest $request, int $product_id){
+        $request->validated();
 
-        $validator = Validator::make($request->all(), [
-            'amount' => 'required|numeric|min:1',
-        ]);
-
-        if ($validator->fails()) {
+        if(!$this->productRepository->isExists($product_id))
             return response()->json([
-                'errors' => $validator->errors(),
-            ], 422); // Unprocessable Entity
-        }
-
-        $product = $this->productRepository->getById($product->id);
-        if (!$product) {
-            return response()->json([
-                "message" => 'Product not found',
-                "errors" => [
-                    "product" => [
-                        "Product not found"
-                    ]
+                'message' => 'Product not found',
+                'errors' => [
+                    'product_id' => "The product id {$product_id} does not exist",
                 ]
-            ], 404); // Not Found
-        }
+            ]);
+
+        $product = $this->productRepository->getById($product_id);
 
         $amount = $request->input('amount');
-        // Update stock
+
         $this->productRepository->update([
             'stock' => $product->stock + $amount
         ], $product->id);
@@ -145,29 +155,27 @@ class ProductController extends Controller
         return new ProductResource($product->refresh());
     }
 
-    public function getProductByCategoryId(Category $category){
-        if(!$this->categoryRepository->isExists($category->id)) return response()->json([
+    public function getProductByCategoryId(int $category_id){
+        if(!$this->categoryRepository->isExists($category_id)) return response()->json([
             'message' => 'Category not found',
             'errors' => [
-                "category" => [
-                    "Category not found"
-                ]
+                "category" => "Category not found"
             ]
         ]);
-        $products = $this->productRepository->getByCategoryId($category->id, 20);
+
+        $products = $this->productRepository->getByCategoryId($category_id, 20);
         return new ProductCollection($products);
     }
 
-    public function getProductByBrandId(Brand $brand){
-        if(!$this->brandRepository->isExists($brand->id)) return response()->json([
+    public function getProductByBrandId(int $brand_id){
+        if(!$this->brandRepository->isExists($brand_id)) return response()->json([
             'message' => 'Brand not found',
             'errors' => [
-                "brand" => [
-                    "Brand not found"
-                ]
+                "brand" => "Brand not found"
             ]
         ]);
-        $products = $this->productRepository->getByBrandId($brand->id, 20);
+
+        $products = $this->productRepository->getByBrandId($brand_id, 20);
         return new ProductCollection($products);
     }
 }

@@ -33,9 +33,9 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     //products
     Route::get('products', [ProductController::class, 'index'])->name('products.index');
     Route::get('products/search', [ProductController::class, 'search'])->name('products.search');
-    Route::get('products/{product}', [ProductController::class, 'show']);
-    Route::get('products/categories/{category}', [ProductController::class, 'getProductByCategoryId'])->name('products.category');
-    Route::get('products/brands/{brand}', [ProductController::class, 'getProductByBrandId'])->name('products.brand');
+    Route::get('products/{product_id}', [ProductController::class, 'show']);
+    Route::get('products/categories/{category_id}', [ProductController::class, 'getProductByCategoryId'])->name('products.category');
+    Route::get('products/brands/{brand_id}', [ProductController::class, 'getProductByBrandId'])->name('products.brand');
 
     //category
     Route::get('categories', [CategoryController::class, 'index']);
@@ -56,17 +56,17 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
 
     //users
     Route::get('users', [UserController::class, 'index'])->name('users.index');
-    Route::get('users/{user}', [UserController::class, 'show'])->name('user.show');
-    Route::put('users/{user}/profile', [ProfileController::class, 'update'])->name('user.profile.update');
-    Route::post('users/{user}/profile/image', [ProfileController::class, 'updateImage'])->name('user.profile.image.update');
-    Route::delete('users/{user}/profile/image', [ProfileController::class, 'deleteImage'])->name('user.profile.image.delete');
+    Route::get('users/{user_id}', [UserController::class, 'show'])->name('user.show');
+    Route::put('users/{user_id}/profile', [ProfileController::class, 'update'])->name('user.profile.update');
+    Route::post('users/{user_id}/profile/image', [ProfileController::class, 'updateImage'])->name('user.profile.image.update');
+    Route::delete('users/{user_id}/profile/image', [ProfileController::class, 'deleteImage'])->name('user.profile.image.delete');
     Route::delete('users/revoke', [AuthenticateController::class, 'revoke'])->name('user.revoke');
 
     //products
     Route::post('products', [ProductController::class, 'store'])->name('products.store');
-    Route::put('products/{product}', [ProductController::class, 'update']);
-    Route::delete('products/{product}', [ProductController::class, 'destroy']);
-    Route::patch('products/{product}/add-stock', [ProductController::class, 'addStock'])->name('products.add.stock');
+    Route::put('products/{product_id}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('products/{product_id}', [ProductController::class, 'destroy']);
+    Route::patch('products/{product_id}/add-stock', [ProductController::class, 'addStock'])->name('products.add.stock');
     Route::post('products/images', [ImageProductController::class, 'store'])->name('products.images.store');
     Route::delete('products/images/{image_product_id}', [ImageProductController::class, 'destroy'])->name('products.images.destroy');
 
@@ -77,10 +77,10 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
 
     //address_customers
     Route::get('address-customers', [AddressCustomerController::class, 'index'])->name('address-customers.index');
-    Route::get('address-customers/{addressCustomerId}', [AddressCustomerController::class, 'show'])->name('address-customer.show'); // แสดงที่อยู่
+    Route::get('address-customers/{address_customer_id}', [AddressCustomerController::class, 'show'])->name('address-customer.show'); // แสดงที่อยู่
     Route::post('address-customers', [AddressCustomerController::class, 'store'])->name('address-customer.store'); // สร้างที่อยู่ใหม่
-    Route::put('address-customers/{addressCustomerId}', [AddressCustomerController::class, 'update'])->name('address-customer.update'); // อัปเดตที่อยู่
-    Route::delete('address-customers/{addressCustomerId}', [AddressCustomerController::class, 'destroy'])->name('address-customer.delete'); // ลบที่อยู่
+    Route::put('address-customers/{address_customer_id}', [AddressCustomerController::class, 'update'])->name('address-customer.update'); // อัปเดตที่อยู่
+    Route::delete('address-customers/{address_customer_id}', [AddressCustomerController::class, 'destroy'])->name('address-customer.delete'); // ลบที่อยู่
 
     //orders
     Route::get('staffs/orders', [OrderController::class, 'index'])->name('orders.index');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Brand;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -19,7 +20,7 @@ class UpdateBrandRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                'unique:brands,name',
+                Rule::unique('brands', 'name')->ignore($this->route('brand_id')),
             ],
         ];
     }

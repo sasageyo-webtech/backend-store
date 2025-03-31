@@ -17,18 +17,18 @@ class ProfileController extends Controller
         private UserRepository $userRepository,
     ){}
 
-    public function update(UpdateUserProfileRequest $request, User $user)
+    public function update(UpdateUserProfileRequest $request, int $user_id)
     {
-        if(!$this->userRepository->isExists($user->id)){
-            return response()->json([
+        $request->validated();
+
+        if(!$this->userRepository->isExists($user_id)) return response()->json([
                 'message' => 'User not found',
                 'errors' => [
-                    'user' => 'User not found',
+                    'user_id' => 'User not found',
                 ]
             ], 404);
-        }
 
-        $request->validated();
+        $user = $this->userRepository->getById($user_id);
 
         // ใช้ค่าจากฐานข้อมูลถ้าฟิลด์ไม่ได้ถูกส่งมา
         $firstname = $request->input('firstname', $user->firstname);
@@ -50,7 +50,7 @@ class ProfileController extends Controller
         return new UserResource($user->refresh());
     }
 
-    public function updateImage(Request $request, User $user)
+    public function updateImage(Request $request, int $user_id)
     {
         $validator = Validator::make($request->all(), [
                 'image_file' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // 2MB Limit
@@ -62,15 +62,16 @@ class ProfileController extends Controller
             ], 422); // Unprocessable Entity
         }
 
-        if(!$this->userRepository->isExists($user->id)){
+        if(!$this->userRepository->isExists($user_id)){
             return response()->json([
                 'message' => 'User not found',
                 'errors' => [
-                    'user' => 'User not found',
+                    'user_id' => 'User not found',
                 ]
             ], 404);
         }
 
+        $user = $this->userRepository->getById($user_id);
         $image_path = $user->image_path;
         $defaultImagePath = 'users/default-user-profile.png';
 
@@ -93,22 +94,21 @@ class ProfileController extends Controller
         return new UserResource($user->refresh());
     }
 
-    public function deleteImage(User $user)
+    public function deleteImage(int $user_id)
     {
-        if(!$this->userRepository->isExists($user->id)){
+        if(!$this->userRepository->isExists($user_id)){
             return response()->json([
                 'message' => 'User not found',
                 'errors' => [
-                    'user' => 'User not found',
+                    'user_id' => 'User not found',
                 ]
             ], 404);
         }
-        $user = $this->userRepository->getById($user->id);
+        $user = $this->userRepository->getById($user_id);
 
         $image_path = $user->image_path;
         $defaultImagePath = 'users/default-user-profile.png';
 
-        // ✅ ถ้ารูปปัจจุบันไม่ใช่ default ให้ลบ
         if ($image_path !== $defaultImagePath && Storage::disk('public')->exists($image_path)) {
             Storage::disk('public')->delete($image_path);
         }
