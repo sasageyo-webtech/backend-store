@@ -46,10 +46,10 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
 
     //brands
     Route::get('brands', [BrandController::class, 'index'])->name('brands.index');
-    Route::get('brands/{brand}', [BrandController::class, 'show'])->name('brands.show');
+    Route::get('brands/{brand_id}', [BrandController::class, 'show'])->name('brands.show');
     Route::post('brands', [BrandController::class, 'store'])->name('brands.store');
-    Route::put('brands/{brand}', [BrandController::class, 'update'])->name('brands.update');
-    Route::delete('brands/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
+    Route::put('brands/{brand_id}', [BrandController::class, 'update'])->name('brands.update');
+    Route::delete('brands/{brand_id}', [BrandController::class, 'destroy'])->name('brands.destroy');
 
 
     //<------------------ Must Auth ------------------>//

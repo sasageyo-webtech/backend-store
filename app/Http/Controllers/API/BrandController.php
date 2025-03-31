@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateBrandRequest;
+use App\Http\Requests\UpdateBrandRequest;
 use App\Http\Resources\BrandCollection;
 use App\Http\Resources\BrandResource;
 use App\Models\Brand;
 use App\Repositories\BrandRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class BrandController extends Controller
 {
@@ -21,15 +24,11 @@ class BrandController extends Controller
         return new BrandCollection($brands);
     }
 
-    public function store(Request $request)
+    public function store(CreateBrandRequest $request)
     {
+        $request->validated();
+
         $name = $request->input('name');
-        $brand = $this->brandRepository->findByName($name);
-        if($brand) {
-            return response()->json([
-                'message' => 'Brand already exists',
-            ], 400);
-        }
 
         $brand = $this->brandRepository->create([
             'name' => $name
@@ -37,41 +36,68 @@ class BrandController extends Controller
 
         return response()->json([
             'message' => 'Brand successfully created',
+            'brand' => new BrandResource($brand)
         ], 201);
+
     }
 
-    public function show(Brand $brand)
+    public function show(int $brand_id)
     {
+        if(!$this->brandRepository->isExists($brand_id)){
+            return response()->json([
+                'message' => 'Brand not found',
+                'errors' => [
+                    'brand_id' => 'Brand not found'
+                ]
+            ], 404);
+        }
+        $brand = $this->brandRepository->getById($brand_id);
         return new BrandResource($brand);
     }
 
-    public function update(Request $request, Brand $brand)
+    public function update(UpdateBrandRequest $request, int $brand_id)
     {
-        // TODO Validate update brand
+        $request->validated();
 
-        $name = $request->input('name');
-        $tmp = $this->brandRepository->findByName($name);
-        if($tmp) {
+        if(!$this->brandRepository->isExists($brand_id)){
             return response()->json([
-                'message' => 'Brand already exists',
-            ], 400);
+                'message' => 'Brand not found',
+                'errors' => [
+                    'brand_id' => 'Brand not found'
+                ]
+            ], 404);
         }
 
+        $brand = $this->brandRepository->getById($brand_id);
+
         $this->brandRepository->update([
-            'name' => $request->input('name'),
+            'name' => $request->input('name', $brand->name),
         ], $brand->id);
 
         return new BrandResource($brand->refresh());
     }
 
-    public function destroy(Brand $brand)
+    public function destroy(int $brand_id)
     {
-        if($brand->products->count()) {
+        if(!$this->brandRepository->isExists($brand_id)){
+            return response()->json([
+                'message' => 'Brand not found',
+                'errors' => [
+                    'brand_id' => 'Brand not found'
+                ]
+            ], 404);
+        }
+
+        $brand = $this->brandRepository->getById($brand_id);
+
+        if($brand->products->count())
             return response()->json([
                 'message' => 'Brand has products associated with it',
-            ], 400);
-        }
+            ], 422);
+
+
         $this->brandRepository->delete($brand->id);
+
         return response()->json([
             'message' => 'Brand successfully deleted',
         ], 200);
