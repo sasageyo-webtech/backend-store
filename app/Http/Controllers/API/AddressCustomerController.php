@@ -39,17 +39,17 @@ class AddressCustomerController extends Controller
         return new AddressCustomerCollection($address_customers);
     }
 
-    public function show(int $addressCustomerId)
+    public function show(int $address_customer_id)
     {
-        if(!$this->addressCustomerRepository->isExists($addressCustomerId)) {
+        if(!$this->addressCustomerRepository->isExists($address_customer_id)) {
             return response()->json([
                 'message' => 'Address customer not found',
                 'errors' => [
-                    'addressCustomer' => 'Address customer not found.'
+                    '$address_customer_id' => 'Address customer not found.'
                 ]
             ], 404);
         }
-        $address_customer = $this->addressCustomerRepository->getById($addressCustomerId);
+        $address_customer = $this->addressCustomerRepository->getById($address_customer_id);
         return new AddressCustomerResource($address_customer);
     }
 
@@ -66,18 +66,20 @@ class AddressCustomerController extends Controller
 
     }
 
-    public function update(UpdateAddressCustomerRequest $request, int $addressCustomerId)
+    public function update(UpdateAddressCustomerRequest $request, int $address_customer_id)
     {
-        if(!$this->addressCustomerRepository->isExists($addressCustomerId)) {
+        $request->validated();
+
+        if(!$this->addressCustomerRepository->isExists($address_customer_id)) {
             return response()->json([
                 'message' => 'Address Customer not found',
                 'errors' => [
-                    'addressCustomerId' => 'Address Customer not found.'
+                    '$address_customer_id' => 'Address Customer not found.'
                 ]
             ]);
         }
-        $address_customer = $this->addressCustomerRepository->getById($addressCustomerId);
-        $request->validated();
+        $address_customer = $this->addressCustomerRepository->getById($address_customer_id);
+
 
         $this->addressCustomerRepository->update([
            "name" => $request->input('name', $address_customer->name),
@@ -96,18 +98,18 @@ class AddressCustomerController extends Controller
         return new AddressCustomerResource($address_customer->refresh());
     }
 
-    public function destroy(int $addressCustomerId)
+    public function destroy(int $address_customer_id)
     {
-        if (!$this->addressCustomerRepository->isExists($addressCustomerId)) {
+        if (!$this->addressCustomerRepository->isExists($address_customer_id)) {
             return response()->json([
                 'message' => 'Address Customer not found',
                 'errors' => [
-                    'addressCustomer' => 'Address Customer not found.'
+                    '$address_customer_id' => 'Address Customer not found.'
                 ]
             ]);
         }
 
-        $this->addressCustomerRepository->delete($addressCustomerId);
+        $this->addressCustomerRepository->delete($address_customer_id);
         return response()->json([
             'message' => 'Address deleted successfully'
         ], 200);

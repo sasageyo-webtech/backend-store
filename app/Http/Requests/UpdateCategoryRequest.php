@@ -19,7 +19,7 @@ class UpdateCategoryRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                'unique:categories,name',
+                Rule::unique('categories', 'name')->ignore($this->route('category_id')),
             ],
         ];
     }

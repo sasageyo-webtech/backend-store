@@ -22,8 +22,16 @@ class UserController extends Controller
     }
 
 
-    public function show(User $user)
+    public function show(int $user_id)
     {
+        if(!$this->userRepository->isExists($user_id))
+            return response()->json([
+                'message' => 'User not found',
+                'errors' => [
+                    'user_id' => 'User not found'
+                ]
+            ]);
+        $user = $this->userRepository->getById($user_id);
         return new UserResource($user);
     }
 

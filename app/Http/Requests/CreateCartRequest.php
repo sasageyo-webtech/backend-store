@@ -26,7 +26,7 @@ class CreateCartRequest extends FormRequest
             'customer_id.exists' => 'The selected customer ID is not found.',
             'product_id.required' => 'The product ID is required.',
             'product_id.integer' => 'The product ID must be an integer.',
-            'product_id.exists' => 'The selected product ID is not found    .',
+            'product_id.exists' => 'The selected product ID is not found.',
             'amount.required' => 'The amount is required.',
             'amount.integer' => 'The amount must be an integer.',
             'amount.min' => 'The amount must be at least 1.',

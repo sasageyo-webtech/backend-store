@@ -14,7 +14,7 @@ class CreateAddressCustomerRequest extends FormRequest
         return [
             'customer_id' => 'required|integer|exists:customers,id',
             'name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:20',
+            'phone_number' => 'required|string|max:20|min:10',
             'house_number' => 'required|string|max:50',
             'building' => 'nullable|string|max:100',
             'street' => 'required|string|max:100',
@@ -41,6 +41,7 @@ class CreateAddressCustomerRequest extends FormRequest
             'phone_number.required' => 'The receiver phone number is required.',
             'phone_number.string' => 'The receiver phone number must be a string.',
             'phone_number.max' => 'The receiver phone number may not be greater than 20 characters.',
+            'phone_number.min' => 'The receiver phone number must be at least 10 characters.',
 
             'house_number.required' => 'The house number is required.',
             'house_number.string' => 'The house number must be a string.',

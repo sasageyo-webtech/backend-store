@@ -16,21 +16,23 @@ class UpdateUserProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstname' => ['required', 'string', 'max:255'],
-            'lastname' => ['required', 'string', 'max:255'],
-            'gender' => ['required', Rule::in([GenderType::FEMALE, GenderType::MALE, GenderType::OTHER])],
+            'firstname' => ['sometimes', 'required', 'string', 'max:255'],
+            'lastname' => ['sometimes','required', 'string', 'max:255'],
+            'gender' => ['sometimes', 'required', Rule::in([GenderType::FEMALE, GenderType::MALE, GenderType::OTHER])],
             'citizen_code' => [
+                'sometimes',
                 'nullable',
                 'string',
                 'size:13',
-                Rule::unique('users', 'citizen_code')->ignore($this->user->id)
+                Rule::unique('users', 'citizen_code')->ignore($this->route('user_id'))
             ],
-            'birthdate' => ['nullable', 'date'],
+            'birthdate' => ['sometimes', 'nullable', 'date'],
             'phone_number' => [
+                'sometimes',
                 'nullable',
                 'string',
                 'regex:/^0[0-9]{9}$/', // ตรวจสอบว่าเป็นเบอร์โทรแบบไทย (10 หลัก)
-                Rule::unique('users', 'phone_number')->ignore($this->user->id)
+                Rule::unique('users', 'phone_number')->ignore($this->route('user_id'))
             ],
         ];
     }

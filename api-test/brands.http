@@ -16,14 +16,14 @@ Content-Type: application/json
 }
 
 ### PUT request to /api/brands/{brand} (Update Brand)
-PUT {{ host }}/api/brands/7
+PUT {{ host }}/api/brands/8
 Accept: application/json
 Content-Type: application/json
 
 {
-    "name" : "laravel"
+    "name" : "Laravel"
 }
 
 ### DELETE request to /api/brands/{brand} (Delete Brand)
-DELETE {{ host }}/api/brands/999
+DELETE {{ host }}/api/brands/8
 Accept: application/json
