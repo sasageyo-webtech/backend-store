@@ -9,6 +9,7 @@ use App\Http\Controllers\API\ImageProductController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,12 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     Route::get('products/{product_id}', [ProductController::class, 'show']);
     Route::get('products/categories/{category_id}', [ProductController::class, 'getProductByCategoryId'])->name('products.category');
     Route::get('products/brands/{brand_id}', [ProductController::class, 'getProductByBrandId'])->name('products.brand');
+
+    //reviews product
+    Route::get('products/{product_id}/reviews', [ReviewController::class, 'index'])->name('product_reviews.index');
+    Route::post('products/{product_id}/reviews', [ReviewController::class, 'store'])->name('product_reviews.store');
+    Route::put('products/{product_id}/reviews/{review_id}', [ReviewController::class, 'update'])->name('product_reviews.update');
+    Route::delete('products/{product_id}/reviews/{review_id}', [ReviewController::class, 'destroy'])->name('product_reviews.destroy');
 
     //category
     Route::get('categories', [CategoryController::class, 'index']);

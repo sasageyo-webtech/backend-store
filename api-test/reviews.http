@@ -1,0 +1,29 @@
+### GET request to /api/products/{product_id}/reviews
+GET {{ host }}/api/products/1/reviews
+Accept: application/json
+
+### POST request to /api/products/{product_id}/reviews
+POST {{ host }}/api/products/1/reviews
+Accept: application/json
+Content-Type: application/json
+
+{
+    "customer_id": 1,
+    "comment": "That's nice!",
+    "rating": 5
+}
+
+### PUT to request to /api/products/{product_id}/reviews/{review_id} (Update Review)
+PUT {{ host }}/api/products/1/reviews/3
+Accept: application/json
+Content-Type: application/json
+
+{
+    "customer_id": 1,
+    "comment": "Ok",
+    "rating": 1
+}
+
+### DELETE to request to /api/products/{product_id}/reviews/{review_id} (Delete Review)
+DELETE {{ host }}/api/products/1/reviews/2
+Accept: application/json
