@@ -77,10 +77,10 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
 
     //address_customers
     Route::get('address-customers', [AddressCustomerController::class, 'index'])->name('address-customers.index');
-    Route::get('address-customers/{addressCustomer}', [AddressCustomerController::class, 'show'])->name('address-customer.show'); // แสดงที่อยู่
+    Route::get('address-customers/{addressCustomerId}', [AddressCustomerController::class, 'show'])->name('address-customer.show'); // แสดงที่อยู่
     Route::post('address-customers', [AddressCustomerController::class, 'store'])->name('address-customer.store'); // สร้างที่อยู่ใหม่
-    Route::put('address-customers/{addressCustomer}', [AddressCustomerController::class, 'update'])->name('address-customer.update'); // อัปเดตที่อยู่
-    Route::delete('address-customers/{addressCustomer}', [AddressCustomerController::class, 'destroy'])->name('address-customer.delete'); // ลบที่อยู่
+    Route::put('address-customers/{addressCustomerId}', [AddressCustomerController::class, 'update'])->name('address-customer.update'); // อัปเดตที่อยู่
+    Route::delete('address-customers/{addressCustomerId}', [AddressCustomerController::class, 'destroy'])->name('address-customer.delete'); // ลบที่อยู่
 
     //orders
     Route::get('staffs/orders', [OrderController::class, 'index'])->name('orders.index');
