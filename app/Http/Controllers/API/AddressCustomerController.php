@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateAddressCustomerRequest;
+use App\Http\Requests\UpdateAddressCustomerRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\AddressCustomerCollection;
 use App\Http\Resources\AddressCustomerResource;
 use App\Models\AddressCustomer;
 use App\Repositories\AddressCustomerRepository;
+use App\Repositories\CustomerRepository;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
@@ -14,88 +18,98 @@ use Illuminate\Http\Request;
 class AddressCustomerController extends Controller
 {
     public function __construct(
-        private AddressCustomerRepository $addressCustomerRepository
+        private AddressCustomerRepository $addressCustomerRepository,
+        private CustomerRepository $customerRepository
     ){}
 
     public function index(Request $request){
-        try {
-            $customer_id = $request->query('customer_id');
-            if (!$customer_id) return response()->json(['error' => 'Customer ID is required'], 400);
-            $addressCustomers = $this->addressCustomerRepository->getByCustomerId($customer_id);
-            return new AddressCustomerCollection($addressCustomers);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Failed to retrieve addresses', 'message' => $e->getMessage()], 500);
+        $customer_id = $request->input('customer_id');
+        if(!$this->customerRepository->isExists($customer_id)) {
+            return response()->json([
+                'message' => 'Customer not found',
+                'errors' => [
+                    'customer_id' => [
+                        'Customer not found.'
+                    ]
+                ]
+            ], 404);
         }
+
+        $address_customers = $this->addressCustomerRepository->getByCustomerId($customer_id);
+        return new AddressCustomerCollection($address_customers);
     }
 
-    public function store(Request $request)
+    public function show(int $addressCustomerId)
     {
-        try {
-            $validatedData = $request->validate([
-                'customer_id' => 'required|integer|exists:customers,id',
-                'name' => 'required|string|max:255',
-                'phone_number' => 'required|string|max:20',
-                'house_number' => 'required|string|max:50',
-                'building' => 'nullable|string|max:100',
-                'street' => 'required|string|max:100',
-                'sub_district' => 'required|string|max:100',
-                'district' => 'required|string|max:100',
-                'province' => 'required|string|max:100',
-                'country' => 'nullable|string|max:100',
-                'postal_code' => 'required|string|max:10',
-                'detail_address' => 'nullable|string|max:255',
-            ]);
-
-            $addressCustomer = $this->addressCustomerRepository->create($validatedData);
-            return new AddressCustomerResource($addressCustomer);
-        } catch (ValidationException $e) {
-            return response()->json(['error' => 'Validation failed', 'messages' => $e->errors()], 422);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Failed to create address', 'message' => $e->getMessage()], 500);
+        if(!$this->addressCustomerRepository->isExists($addressCustomerId)) {
+            return response()->json([
+                'message' => 'Address customer not found',
+                'errors' => [
+                    'addressCustomer' => 'Address customer not found.'
+                ]
+            ], 404);
         }
+        $address_customer = $this->addressCustomerRepository->getById($addressCustomerId);
+        return new AddressCustomerResource($address_customer);
     }
 
-    public function show(AddressCustomer $addressCustomer)
+    public function store(CreateAddressCustomerRequest $request)
     {
+        // Data ผ่านการ validate แล้ว
+        $validatedData = $request->validated(); // ดึงข้อมูลที่ validated แล้ว
+
+        // สร้าง AddressCustomer
+        $addressCustomer = $this->addressCustomerRepository->create($validatedData);
+
+        // คืนค่า AddressCustomerResource
         return new AddressCustomerResource($addressCustomer);
+
     }
 
-    public function update(Request $request, AddressCustomer $addressCustomer)
+    public function update(UpdateAddressCustomerRequest $request, int $addressCustomerId)
     {
-       try {
-           $validatedData = $request->validate([
-               'name' => 'sometimes|required|string|max:255',
-               'phone_number' => 'sometimes|required|string|max:20',
-               'house_number' => 'sometimes|required|string|max:50',
-               'building' => 'nullable|string|max:100',
-               'street' => 'sometimes|required|string|max:100',
-               'sub_district' => 'sometimes|required|string|max:100',
-               'district' => 'sometimes|required|string|max:100',
-               'province' => 'sometimes|required|string|max:100',
-               'country' => 'nullable|string|max:100',
-               'postal_code' => 'sometimes|required|string|max:10',
-               'detail_address' => 'nullable|string|max:255',
-           ]);
-
-           $this->addressCustomerRepository->update($validatedData, $addressCustomer->id);
-           return new AddressCustomerResource($addressCustomer->refresh());
-       } catch (ValidationException $e) {
-           return response()->json(['error' => 'Validation failed', 'messages' => $e->errors()], 422);
-       } catch (Exception $e) {
-           return response()->json(['error' => 'Failed to update address', 'message' => $e->getMessage()], 500);
-       }
-    }
-
-    public function destroy(AddressCustomer $addressCustomer)
-    {
-        try {
-            if (!$this->addressCustomerRepository->isExists($addressCustomer->id)) {
-                return response()->json(['error' => 'Address not found'], 404);
-            }
-            $this->addressCustomerRepository->delete($addressCustomer->id);
-            return response()->json(['message' => 'Address deleted successfully'], 200);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Failed to delete address', 'message' => $e->getMessage()], 500);
+        if(!$this->addressCustomerRepository->isExists($addressCustomerId)) {
+            return response()->json([
+                'message' => 'Address Customer not found',
+                'errors' => [
+                    'addressCustomerId' => 'Address Customer not found.'
+                ]
+            ]);
         }
+        $address_customer = $this->addressCustomerRepository->getById($addressCustomerId);
+        $request->validated();
+
+        $this->addressCustomerRepository->update([
+           "name" => $request->input('name', $address_customer->name),
+           "phone_number" => $request->input('phone_number', $address_customer->phone_number),
+           "house_number" => $request->input('house_number', $address_customer->house_number),
+           "building" => $request->input('building', $address_customer->building),
+           "street" => $request->input('street', $address_customer->street),
+           "sub_district" => $request->input('sub_district', $address_customer->sub_district),
+           "district" => $request->input('district', $address_customer->district),
+           "province" => $request->input('province', $address_customer->province),
+           "country" => $request->input('country', $address_customer->country),
+           "postal_code" => $request->input('postal_code', $address_customer->postal_code),
+           "detail_address" => $request->input('detail_address', $address_customer->detail_address),
+        ], $address_customer->id);
+
+        return new AddressCustomerResource($address_customer->refresh());
+    }
+
+    public function destroy(int $addressCustomerId)
+    {
+        if (!$this->addressCustomerRepository->isExists($addressCustomerId)) {
+            return response()->json([
+                'message' => 'Address Customer not found',
+                'errors' => [
+                    'addressCustomer' => 'Address Customer not found.'
+                ]
+            ]);
+        }
+
+        $this->addressCustomerRepository->delete($addressCustomerId);
+        return response()->json([
+            'message' => 'Address deleted successfully'
+        ], 200);
     }
 }
