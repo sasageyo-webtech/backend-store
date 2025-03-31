@@ -29,7 +29,7 @@ Content-Type: multipart/form-data boundary=----WebKitFormBoundary
 Content-Disposition: form-data; name="image_file"; filename="profile1.png"
 Content-Type: image/png
 
-< ./profile1.png
+< ./images/profile1.png
 ------WebKitFormBoundary--
 
 
