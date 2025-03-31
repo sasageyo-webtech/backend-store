@@ -84,10 +84,10 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
 
     //orders
     Route::get('staffs/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('customers/orders/{customer}', [OrderController::class, 'getOrderCustomer'])->name('orders.getOrderCustomer');
+    Route::get('customers/orders/{customer_id}', [OrderController::class, 'getOrderCustomer'])->name('orders.getOrderCustomer');
     Route::post('customers/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::patch('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+    Route::get('orders/{order_id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::patch('orders/{order_id}', [OrderController::class, 'update'])->name('orders.update');
 });
 
 Route::middleware(["throttle:api", "auth:sanctum"])->as('api.')->group(function() {
