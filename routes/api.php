@@ -73,7 +73,7 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     //carts
     Route::get('carts', [CartController::class, 'index'])->name('carts.index');
     Route::post('carts', [CartController::class, 'store']); // เพิ่มสินค้าลงในตะกร้า
-    Route::delete('carts/{cart}', [CartController::class, 'destroy']); // ลบสินค้าจากตะกร้า
+    Route::delete('carts/{cart_id}', [CartController::class, 'destroy']); // ลบสินค้าจากตะกร้า
 
     //address_customers
     Route::get('address-customers', [AddressCustomerController::class, 'index'])->name('address-customers.index');
