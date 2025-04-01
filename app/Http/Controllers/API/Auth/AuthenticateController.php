@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\RegisterUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Enums\UserRole;
 use App\Models\User;
@@ -20,41 +22,30 @@ class AuthenticateController extends Controller
     ){}
 
     //TODO return user response
-    public function login(Request $request) {
+    public function login(LoginUserRequest $request) {
+        $request->validated();
+
         $email = $request->input('email');
         $password = $request->input('password');
 
         $user = $this->userRepository->findByEmail($email);
 
-        if (!$user) {
-            return response()->json([
-                'message' => 'User not found',
-            ])->setStatusCode(404);
-        }
         if (Hash::check($password, $user->password)) {
             return new UserResource($user);
         }
 
         return response()->json([
-            'message' => 'Invalid credentials',
-        ])->setStatusCode(401);
+            'message' => 'Password is wrong, Invalid credentials',
+            'errors' => [
+                'password' => 'The provided credentials are incorrect.',
+
+            ]
+        ])->setStatusCode(422);
     }
 
-    public function register(Request $request) {
-//        $validator = Validator::make($request->all(), [
-//            'username' => 'required|string|max:255|unique:users',
-//            'email' => 'required|string|email|max:255|unique:users',
-//            'firstname' => 'required|string|max:255',
-//            'lastname' => 'required|string|max:255',
-//            'gender' => 'required|string|in:MALE,FEMALE',
-//            'password' => 'required|string|min:8|confirmed',
-//        ]);
-//
-//        if ($validator->fails()) {
-//            return response()->json([
-//                'message' => $validator->errors(),
-//            ], 422);
-//        }
+    public function register(RegisterUserRequest $request) {
+
+         $request->validated();
 
         $username = $request->input('username');
         $email = $request->input('email');
@@ -62,20 +53,7 @@ class AuthenticateController extends Controller
         $lastname = $request->input('lastname');
         $gender = $request->input('gender');
         $password = $request->input('password');
-        $confirm_password = $request->input('confirm_password');
-
-        $user = $this->userRepository->findByEmail($email);
-        if($user) {
-            return response()->json([
-                "message" => "this email is already registered",
-            ], 409   );
-        }
-
-        if($password != $confirm_password) {
-            return response()->json([
-                'message' => 'Passwords do not match',
-            ], 200);
-        }
+        $password_confirmation = $request->input('password_confirmation');
 
 
         $user = User::create([

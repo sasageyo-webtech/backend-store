@@ -24,7 +24,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "category_id" : 8,
+    "category_id" : 1,
     "brand_id" : 5,
     "name" : "product test",
     "description" : "Description test",
@@ -34,14 +34,14 @@ Content-Type: application/json
 
 
 ### PUT request to /api/products/{id} (Update Product)
-PUT {{ host }}/api/products/2
+PUT {{ host }}/api/products/101
 Accept: application/json
 Content-Type: application/json
 
 {
-    "category_id" : 8,
-    "brand_id" : 4,
-    "name" : "name product1",
+    "category_id" : 1,
+    "brand_id" : 5,
+    "name" : "product test",
     "description" : "description can null",
     "price" : 123,
     "accessibility" : "PRIVATE"

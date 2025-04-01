@@ -4,13 +4,13 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "username" : "test",
+    "username" : "testt",
     "email" : "test@gmail.com",
     "firstname" : "Athirat",
     "lastname" : "Kaewwichien",
     "gender" : "MALE",
     "password" : "password",
-    "confirm_password" : "password"
+    "password_confirmation" : "password"
 }
 
 ### POST request to user login
@@ -20,6 +20,6 @@ Content-Type: application/json
 
 {
     "email" : "test@gmail.com",
-    "password" : "12345678"
+    "password" : "password"
 }
 

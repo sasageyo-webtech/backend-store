@@ -57,7 +57,7 @@ class ProductController extends Controller
                 'errors' => [
                     'product_id' => "The product id {$product_id} does not exist",
                 ]
-            ]);
+            ], 404);
 
         $product = $this->productRepository->getById($product_id);
         return new ProductResource($product);
@@ -73,7 +73,7 @@ class ProductController extends Controller
                 'errors' => [
                     'product_id' => "The product id {$product_id} does not exist",
                 ]
-            ]);
+            ], 404);
 
         $product = $this->productRepository->getById($product_id);
 
@@ -142,7 +142,7 @@ class ProductController extends Controller
                 'errors' => [
                     'product_id' => "The product id {$product_id} does not exist",
                 ]
-            ]);
+            ], 404);
 
         $product = $this->productRepository->getById($product_id);
 
@@ -161,7 +161,7 @@ class ProductController extends Controller
             'errors' => [
                 "category" => "Category not found"
             ]
-        ]);
+        ], 404);
 
         $products = $this->productRepository->getByCategoryId($category_id, 20);
         return new ProductCollection($products);
@@ -173,7 +173,7 @@ class ProductController extends Controller
             'errors' => [
                 "brand" => "Brand not found"
             ]
-        ]);
+        ], 404);
 
         $products = $this->productRepository->getByBrandId($brand_id, 20);
         return new ProductCollection($products);
