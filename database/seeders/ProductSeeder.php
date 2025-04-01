@@ -32,15 +32,19 @@ class ProductSeeder extends Seeder
                 }
 
                 // random review for product
+                $total_rating = 0;
                 $numbs_reviews = rand(3, 6);
                 for($j = 1; $j <= $numbs_reviews; $j++) {
-                    Review::factory()->create([
+                    $review = Review::factory()->create([
                         'product_id' => $product->id,
                         'customer_id' => Customer::inRandomOrder()->first()->id,
                     ]);
-                    // ประมวลผล rating ให้ product
-
+                    $total_rating += $review->rating;
                 }
+                // ประมวลผล rating ให้ product
+                $product->update([
+                    "rating" => $total_rating/$numbs_reviews,
+                ]);
 
             }
         }
