@@ -9,12 +9,12 @@ trait SimpleCRUD
 {
     public function getAll(): Collection
     {
-        return $this->model::all();
+        return $this->model::orderBy('updated_at', 'desc')->all();
     }
 
     public function get(int $limit = 10) : LengthAwarePaginator
     {
-        return $this->model::paginate($limit);
+        return $this->model::orderBy('updated_at', 'desc')->paginate($limit);
     }
 
     public function getById(int $id)

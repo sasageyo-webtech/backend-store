@@ -15,15 +15,15 @@ class ProductRepository
 
     public function filterByName(string $name, int $limit = 10): LengthAwarePaginator
     {
-        return $this->model::whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($name) . "%"])->paginate($limit);
+        return $this->model::whereRaw('LOWER(name) LIKE ?', ["%" . strtolower($name) . "%"])->orderBy('updated_at', 'desc')->paginate($limit);
     }
 
     public function getByCategoryId(int $categoryId, int $limit = 10): LengthAwarePaginator {
-        return $this->model::where('category_id', $categoryId)->paginate($limit);
+        return $this->model::where('category_id', $categoryId)->orderBy('updated_at', 'desc')->paginate($limit);
     }
 
     public function getByBrandId(int $brandId, int $limit = 10): LengthAwarePaginator {
-        return $this->model::where('brand_id', $brandId)->paginate($limit);
+        return $this->model::where('brand_id', $brandId)->orderBy('updated_at', 'desc')->paginate($limit);
     }
 
     public function isUsedInOrder(int $product_id): bool

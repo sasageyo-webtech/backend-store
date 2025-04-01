@@ -52,7 +52,7 @@ DELETE {{ host }}/api/products/150
 Accept: application/json
 
 ### PATCH request to /api/products/{product}/add-stock (Add Stock Product)
-PATCH {{ host }}/api/products/99/add-stock
+PATCH {{ host }}/api/products/98/add-stock
 Accept: application/json
 Content-Type: application/json
 
