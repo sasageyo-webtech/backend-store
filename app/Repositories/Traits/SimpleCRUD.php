@@ -9,7 +9,7 @@ trait SimpleCRUD
 {
     public function getAll(): Collection
     {
-        return $this->model::orderBy('updated_at', 'desc')->all();
+        return $this->model::orderBy('updated_at', 'desc')->get();
     }
 
     public function get(int $limit = 10) : LengthAwarePaginator

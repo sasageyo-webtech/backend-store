@@ -12,6 +12,7 @@ use App\Repositories\CustomerRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class AuthenticateController extends Controller
@@ -62,6 +63,7 @@ class AuthenticateController extends Controller
             'firstname' => $firstname,
             'lastname' => $lastname,
             'gender' => $gender,
+            'image_path' => $this->getImagePath($username),
             'password' => Hash::make($password),
         ]);
 
@@ -76,10 +78,29 @@ class AuthenticateController extends Controller
     }
 
     public function revoke(Request $request) {
-        $request->user()->tokens()->delete();
+        if(!$this->userRepository->isExists($request->input('user_id'))){
+            return response()->json([
+                'message' => 'User not found',
+                'errors' => [
+                    'user_id' => 'The user does not exist.',
+                ]
+            ]);
+        }
+        $user = $this->userRepository->getById($request->input('user_id'));
+        $user->tokens()->delete();
         return response()->json([
             'success' => true,
             'message' => 'Token revoked'
         ]);
+    }
+
+    protected function getImagePath(string $username): string|null
+    {
+        // โฟลเดอร์ที่เก็บรูปภาพ
+        $defaultImagePath = 'users/default-user-profile.png';
+
+        // ดึงรายชื่อไฟล์ทั้งหมดในโฟลเดอร์
+        // คืนค่า path ของภาพที่เลือก
+        return Storage::disk('public')->exists($defaultImagePath) ? $defaultImagePath : 'users/default-user-profile.png';
     }
 }

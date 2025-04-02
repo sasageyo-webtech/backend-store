@@ -10,7 +10,7 @@ Content-Type: application/json
     "lastname" : "Kaewwichien",
     "gender" : "MALE",
     "password" : "password",
-    "password_confirmation" : "password"
+    "password_confirmation" : "passwor"
 }
 
 ### POST request to user login
@@ -21,5 +21,14 @@ Content-Type: application/json
 {
     "email" : "test@gmail.com",
     "password" : "password"
+}
+
+### DELETE request to user logout
+DELETE {{ host }}/api/users/revoke
+Accept: application/json
+Content-Type: application/json
+
+{
+    "user_id": 1
 }
 

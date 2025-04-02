@@ -18,7 +18,7 @@ Content-Type: application/json
     "customer_id" : 1,
     "name": "Jane Doe",
     "phone_number": "0987654321",
-    "house_number": "456",
+    "house_number": "",
     "building": "no1",
     "street": "Second St",
     "sub_district": "Sub District",

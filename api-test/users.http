@@ -3,7 +3,7 @@ GET {{ host }}/api/users
 Accept: application/json
 
 ### GET request to /api/users/{user} (Show User)
-GET {{ host }}/api/users/1
+GET {{ host }}/api/users/36
 Accept: application/json
 
 ### PUT request to /api/users/{user}/profile (Update User Profile) ไม่จำเป็นต้องใส่ทุก field ก็ได้

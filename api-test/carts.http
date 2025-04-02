@@ -1,5 +1,5 @@
 ### GET request to /api/carts (Show carts customer)
-GET {{ host }}/api/carts?customer_id=1
+GET {{ host }}/api/carts?customer_id=100
 Accept: application/json
 Content-Type: application/json
 

@@ -28,7 +28,7 @@ Route::middleware(["throttle:api"])->as('api.')->group(function() {
     //users
     Route::prefix("users")->as("users.")->group(function() {
         Route::post('login', [AuthenticateController::class, 'login'])->name('user.login');
-        Route::post('register', [AuthenticateController::class, 'register'])->name('user.register');
+        Route::post('register', [AuthenticateController::class, 'register']);
     });
 
     //products
