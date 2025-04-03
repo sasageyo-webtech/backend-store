@@ -1,0 +1,41 @@
+### GET request to /api/users (Show Users)
+GET {{ host }}/api/users
+Accept: application/json
+
+### GET request to /api/users/{user} (Show User)
+GET {{ host }}/api/users/36
+Accept: application/json
+
+### PUT request to /api/users/{user}/profile (Update User Profile) ไม่จำเป็นต้องใส่ทุก field ก็ได้
+PUT {{ host }}/api/users/2/profile
+Accept: application/json
+Content-Type: application/json
+
+{
+    "firstname" : "Athirat",
+    "lastname" : "Kaewwichien",
+    "gender" : "MALE",
+    "citizen_code" : "1234567890123",
+    "birthdate" : "2003-01-29",
+    "phone_number" : "0234567890"
+}
+
+### POST request to /api/users/{user}/profile/image (Update User Image Profile)
+POST {{ host }}/api/users/1/profile/image
+Accept: application/json
+Content-Type: multipart/form-data boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="image_file"; filename="profile1.png"
+Content-Type: image/png
+
+< ./images/profile1.png
+------WebKitFormBoundary--
+
+
+### DELETE request to /api/users/{user}/profile/image (DELETE User Image Profile)
+DELETE {{ host }}/api/users/1/profile/image
+Accept: application/json
+
+
+

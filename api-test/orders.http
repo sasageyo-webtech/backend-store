@@ -1,0 +1,42 @@
+### POST request to /api/orders (Create Order)
+POST /api/customers/orders HTTP/1.1
+Host: localhost
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryABC123
+Accept: application/json
+
+------WebKitFormBoundaryABC123
+Content-Disposition: form-data; name="customer_id"
+
+1
+------WebKitFormBoundaryABC123
+Content-Disposition: form-data; name="address_customer_id"
+
+1
+------WebKitFormBoundaryABC123
+Content-Disposition: form-data; name="image_receipt_path"; filename="slip1.png"
+Content-Type: image/png
+
+< ./images/slip1.png
+------WebKitFormBoundaryABC123--
+
+
+### GET request to /api/staffs/orders
+GET {{ host }}/api/staffs/orders
+Accept: application/json
+
+### GET request to /api/customers/orders/{customer_id}
+GET {{ host }}/api/customers/orders/1
+Accept: application/json
+
+### GET request to /api/orders/{order_id}
+GET {{ host }}/api/orders/3
+Accept: application/json
+
+### PATCH request to /api/orders/{order_id}
+PATCH {{ host }}/api/orders/2
+Accept: application/json
+Content-Type: application/json
+
+{
+    "status": "APPROVED"
+}

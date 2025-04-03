@@ -1,0 +1,20 @@
+### GET request to /api/carts (Show carts customer)
+GET {{ host }}/api/carts?customer_id=100
+Accept: application/json
+Content-Type: application/json
+
+
+### POST request to /api/carts (Create Cart)
+POST {{ host }}/api/carts
+Accept: application/json
+Content-Type: application/json
+
+{
+    "customer_id": 1,
+    "product_id": 1,
+    "amount": 21
+}
+
+###DELETE request to /api/carts/{cart} (Delete Cart)
+DELETE {{ host }}/api/carts/101
+Accept: application/json

@@ -1,0 +1,29 @@
+### GET request to /api/brands (Show Brands)
+GET {{ host }}/api/brands
+Accept: application/json
+
+### GET request to /api/brands/{brand} (Show Brand)
+GET {{ host }}/api/brands/1
+Accept: application/json
+
+### POST request to /api/brands (Create Brand)
+POST {{ host }}/api/brands
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name" : "Inkgu"
+}
+
+### PUT request to /api/brands/{brand} (Update Brand)
+PUT {{ host }}/api/brands/8
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name" : "Laravel"
+}
+
+### DELETE request to /api/brands/{brand} (Delete Brand)
+DELETE {{ host }}/api/brands/8
+Accept: application/json

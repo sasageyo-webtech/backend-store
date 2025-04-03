@@ -1,0 +1,34 @@
+### POST request to user register
+POST {{ host }}/api/users/register
+Accept: application/json
+Content-Type: application/json
+
+{
+    "username" : "testt",
+    "email" : "test@gmail.com",
+    "firstname" : "Athirat",
+    "lastname" : "Kaewwichien",
+    "gender" : "MALE",
+    "password" : "password",
+    "password_confirmation" : "passwor"
+}
+
+### POST request to user login
+POST {{ host }}/api/users/login
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email" : "test@gmail.com",
+    "password" : "password"
+}
+
+### DELETE request to user logout
+DELETE {{ host }}/api/users/revoke
+Accept: application/json
+Content-Type: application/json
+
+{
+    "user_id": 1
+}
+

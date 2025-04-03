@@ -1,0 +1,33 @@
+### GET request to /api/categories (Show Categories)
+GET {{ host }}/api/categories
+Accept: application/json
+
+
+### GET request to /api/categories (Show Category)
+GET {{ host }}/api/categories/10
+Accept: application/json
+
+
+### POST request to /api/categories (Create Category)
+POST {{ host }}/api/categories
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name" : "boring"
+}
+
+### PUT request to /api/categories/{id} (Update Category)
+PUT {{ host }}/api/categories/10
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name" : "high"
+}
+
+### DELETE request to /api/categories/{id} (Delete Category)
+DELETE {{ host }}/api/categories/10
+Accept: application/json
+
+###

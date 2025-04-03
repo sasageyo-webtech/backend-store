@@ -1,0 +1,53 @@
+### GET request to /api/address-customers (Show Address Customers)
+GET {{ host }}/api/address-customers?customer_id=1
+Accept: application/json
+Content-Type: application/json
+
+
+### GET request to /api/address-customers/{addressCustomer} (Show Address Customer)
+GET {{ host }}/api/address-customers/32
+Accept: application/json
+
+
+### POST request to /api/address-customers
+POST {{ host }}/api/address-customers
+Accept: application/json
+Content-Type: application/json
+
+{
+    "customer_id" : 1,
+    "name": "Jane Doe",
+    "phone_number": "0987654321",
+    "house_number": "",
+    "building": "no1",
+    "street": "Second St",
+    "sub_district": "Sub District",
+    "district": "District",
+    "province": "Province",
+    "country": "Country",
+    "postal_code": "54321",
+    "detail_address": "Next to the school"
+}
+
+### PUT request to /api/address-customers/{addressCustomerId} (Update Address Customer)
+PUT {{ host }}/api/address-customers/1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Patdarin Faithong",
+    "phone_number": "0987654321",
+    "house_number": "456",
+    "building": "test",
+    "street": "Second St",
+    "sub_district": "Sub District",
+    "district": "District",
+    "province": "test",
+    "country": "Country",
+    "postal_code": "54321",
+    "detail_address": "Next to the school"
+}
+
+### DELETE request to /api/address-customers/{addressCustomer} (Delete Address Customer)
+DELETE {{ host }}/api/address-customers/322
+Accept: application/json

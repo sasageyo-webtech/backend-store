@@ -1,0 +1,89 @@
+### GET request to /api/products (Show Products)
+GET {{ host }}/api/products
+Accept: application/json
+
+
+### GET request to /api/products/{id} (Show Product)
+GET {{ host }}/api/products/1
+Accept: application/json
+
+
+### GET request to /api/products/search (Search Products)
+GET {{ host }}/api/products/search
+Accept: application/json
+Content-Type: application/json
+
+{
+    "query": "M"
+}
+
+
+### POST request to /api/products (Create Product)
+POST {{ host }}/api/products
+Accept: application/json
+Content-Type: application/json
+
+{
+    "category_id" : 1,
+    "brand_id" : 5,
+    "name" : "product test",
+    "description" : "Description test",
+    "price" : -1
+}
+
+
+
+### PUT request to /api/products/{id} (Update Product)
+PUT {{ host }}/api/products/101
+Accept: application/json
+Content-Type: application/json
+
+{
+    "category_id" : 1,
+    "brand_id" : 5,
+    "name" : "product test",
+    "description" : "description can null",
+    "price" : 123,
+    "accessibility" : "PRIVATE"
+}
+
+### DELETE request to /api/products/{id} (Delete Product)
+DELETE {{ host }}/api/products/150
+Accept: application/json
+
+### PATCH request to /api/products/{product}/add-stock (Add Stock Product)
+PATCH {{ host }}/api/products/98/add-stock
+Accept: application/json
+Content-Type: application/json
+
+{
+    "amount" : 1
+}
+
+### POST request to upload an image for a product
+POST {{host}}/api/products/images
+Accept: application/json
+Content-Type: multipart/form-data boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="image_file"; filename="product.png"
+Content-Type: image/png
+
+< ./images/product.png
+------WebKitFormBoundary
+Content-Disposition: form-data; name="product_id"
+
+1
+------WebKitFormBoundary--
+
+### DELETE request to delete an image product by ID
+DELETE {{host}}/api/products/images/1000
+Accept: application/json
+
+### GET request to /api/products/categories/{category} (Show Product by Category)
+GET {{ host }}/api/products/categories/1
+Accept: application/json
+
+### GET request to /api/products/brands/{brands} (Show Product by Brand)
+GET {{ host }}/api/products/brands/1
+Accept: application/json
