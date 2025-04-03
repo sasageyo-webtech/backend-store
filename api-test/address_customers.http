@@ -5,7 +5,7 @@ Content-Type: application/json
 
 
 ### GET request to /api/address-customers/{addressCustomer} (Show Address Customer)
-GET {{ host }}/api/address-customers/8
+GET {{ host }}/api/address-customers/32
 Accept: application/json
 
 
@@ -49,5 +49,5 @@ Content-Type: application/json
 }
 
 ### DELETE request to /api/address-customers/{addressCustomer} (Delete Address Customer)
-DELETE {{ host }}/api/address-customers/32
+DELETE {{ host }}/api/address-customers/322
 Accept: application/json

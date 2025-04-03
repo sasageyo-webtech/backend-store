@@ -52,7 +52,7 @@ class ProductFactory extends Factory
         return [
             'category_id' => Category::inRandomOrder()->first()->id,
             'brand_id' => Brand::inRandomOrder()->first()->id,
-            'name' => $this->faker->randomElement($name),
+            'name' => $this->faker->randomElement($name) . " series-" . $this->faker->year,
             'description' => $this->faker->realText(),
             'price' => $this->faker->numberBetween(50, 1000),
             'stock' => $this->faker->numberBetween(0, 100),

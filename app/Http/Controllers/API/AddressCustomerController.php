@@ -76,7 +76,7 @@ class AddressCustomerController extends Controller
                 'errors' => [
                     '$address_customer_id' => 'Address Customer not found.'
                 ]
-            ]);
+            ], 404);
         }
         $address_customer = $this->addressCustomerRepository->getById($address_customer_id);
 
@@ -104,9 +104,9 @@ class AddressCustomerController extends Controller
             return response()->json([
                 'message' => 'Address Customer not found',
                 'errors' => [
-                    '$address_customer_id' => 'Address Customer not found.'
+                    'address_customer_id' => 'Address Customer not found.'
                 ]
-            ]);
+            ], 404);
         }
 
         $this->addressCustomerRepository->delete($address_customer_id);

@@ -30,7 +30,7 @@ class UserController extends Controller
                 'errors' => [
                     'user_id' => 'User not found'
                 ]
-            ]);
+            ], 404);
         $user = $this->userRepository->getById($user_id);
         return new UserResource($user);
     }

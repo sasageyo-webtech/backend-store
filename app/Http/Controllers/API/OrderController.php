@@ -62,7 +62,7 @@ class OrderController extends Controller
                 'errors' => [
                     'address_customer_id' => "Address {$address_customer_id} not found",
                 ]
-            ]);
+            ], 404);
 
         // ตรวจสอบว่า Address เป็นของ Customer หรือไม่
         if (!$customer->address_customers->contains('id', $address_customer_id)) {

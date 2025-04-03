@@ -48,7 +48,22 @@ class ReviewController extends Controller
             'rating' => $request->input('rating'),
         ]);
 
-        //TODO - Update Rating Product
+        $reviews = $this->reviewRepository->getAllReviewByProductId($product->id);
+        $totalReviews = count($reviews);
+        $totalRating = 0;
+        $averageRating = 0;
+        if ($totalReviews > 0) {
+            foreach ($reviews as $review) {
+                $totalRating += $review->rating; // สมมติว่าแต่ละ review มีค่า rating
+            }
+
+            $averageRating = round($totalRating / $totalReviews, 2); // ปัดเป็นทศนิยม 2 ตำแหน่ง
+        }
+
+        // บันทึกค่า rating ลงใน product
+        $product->rating = $averageRating;
+        $product->save();
+
 
         return new ReviewResource($review->refresh());
     }
@@ -91,7 +106,26 @@ class ReviewController extends Controller
             'rating' => $request->input('rating', $review->rating),
         ], $review->id);
 
-        //TODO - Update Rating Product
+
+        $product = $this->productRepository->getById($product_id);
+
+        $reviews = $this->reviewRepository->getAllReviewByProductId($product->id);
+        $totalReviews = count($reviews);
+        $totalRating = 0;
+        $averageRating = 0;
+        if ($totalReviews > 0) {
+            foreach ($reviews as $review) {
+                $totalRating += $review->rating; // สมมติว่าแต่ละ review มีค่า rating
+            }
+
+            $averageRating = round($totalRating / $totalReviews, 2); // ปัดเป็นทศนิยม 2 ตำแหน่ง
+        }
+
+        // บันทึกค่า rating ลงใน product
+        $product->rating = $averageRating;
+        $product->save();
+
+
         return new ReviewResource($review->refresh());
     }
 
@@ -118,6 +152,24 @@ class ReviewController extends Controller
         }
 
         $this->reviewRepository->delete($review_id);
+
+        $product = $this->productRepository->getById($product_id);
+        $reviews = $this->reviewRepository->getAllReviewByProductId($product->id);
+        $totalReviews = count($reviews);
+        $totalRating = 0;
+        $averageRating = 0;
+        if ($totalReviews > 0) {
+            foreach ($reviews as $review) {
+                $totalRating += $review->rating; // สมมติว่าแต่ละ review มีค่า rating
+            }
+
+            $averageRating = round($totalRating / $totalReviews, 2); // ปัดเป็นทศนิยม 2 ตำแหน่ง
+        }
+
+        // บันทึกค่า rating ลงใน product
+        $product->rating = $averageRating;
+        $product->save();
+
 
         return response()->json(['message' => 'Review deleted successfully.'], 200);
     }
