@@ -6,6 +6,7 @@ use App\Models\AddressCustomer;
 use App\Models\Customer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerSeeder extends Seeder
 {
@@ -25,5 +26,13 @@ class CustomerSeeder extends Seeder
             }
 
         }
+
+        $customer = Customer::factory()->create([
+            'email' => 'test@gmail.com',
+            'password' => Hash::make('password'),
+        ]);
+        AddressCustomer::factory()->create([
+            'customer_id' => $customer->id,
+        ]);
     }
 }
