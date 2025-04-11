@@ -27,10 +27,11 @@ class CustomerSeeder extends Seeder
 
         }
 
-        $customer = Customer::factory()->create([
-            'email' => 'test@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
+        $customer = Customer::factory()->create();
+        $customer->user->email = "test@gmail.com";
+        $customer->user->save();
+
+
         AddressCustomer::factory()->create([
             'customer_id' => $customer->id,
         ]);

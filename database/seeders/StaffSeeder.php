@@ -20,10 +20,10 @@ class StaffSeeder extends Seeder
             Staff::factory()->count($limit)->create();
         }
 
-        Staff::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
+        $staff = Staff::factory()->create();
+        $staff->user->username = 'admin';
+        $staff->user->email = 'admin@gmail.com';
+        $staff->user->save();
+
     }
 }
